@@ -1143,7 +1143,32 @@ function productCard(p, image, i, compact) {
 }
 
 function renderProducts(data) {
-  return `<main class="products-page"><section class="page-hero"><p class="eyebrow light">Linhagens brasileiras Hy-Line</p><h1>Três linhagens, diferentes perfis produtivos.</h1><p>Brown, W-36 e W-80 atendem diferentes objetivos de produção, com características técnicas voltadas à eficiência, qualidade de ovos e adaptação a sistemas comerciais.</p></section><section class="lineage-grid section">${(data.products || []).map((p, i) => productCard(p, data.images?.products?.[i], i, false)).join("")}</section><section class="split-info"><div><p class="eyebrow light">Escolha técnica</p><h2>A escolha da linhagem considera mercado, manejo e estrutura de produção.</h2></div><div class="info-grid"><article><strong>Ovos brancos</strong><p>Opções voltadas a eficiência alimentar, persistência de postura e padronização.</p></article><article><strong>Ovos vermelhos</strong><p>Linhagem para mercados que buscam ovos vermelhos e rusticidade.</p></article><article><strong>Material técnico</strong><p>Guias de manejo e orientações de campo apoiam a condução dos lotes.</p></article></div></section></main>`;
+  return `<main class="content-page">
+    <section class="page-hero product-page-hero">
+      <p class="eyebrow light">Linhagens Hy-Line</p>
+      <h1>Linhagens Hy-Line para a postura brasileira.</h1>
+      <p>Brown, W-36 e W-80 atendem diferentes objetivos de produção, com características técnicas voltadas à eficiência, qualidade de ovos e adaptação a sistemas comerciais.</p>
+    </section>
+    <section class="content-band">
+      <div class="content-heading">
+        <p class="eyebrow">Nossas aves</p>
+        <h2>Três linhagens, diferentes perfis produtivos.</h2>
+      </div>
+      <div class="lineage-list">${(data.products || []).map((p, i) => lineageCard(p, data.images?.products?.[i], i)).join("")}</div>
+    </section>
+    <section class="split-info">
+      <div><p class="eyebrow light">Escolha técnica</p><h2>A escolha da linhagem considera mercado, manejo e estrutura de produção.</h2></div>
+      <div class="info-grid">
+        <article><strong>Ovos brancos</strong><p>Opções voltadas a eficiência alimentar, persistência de postura e padronização para mercados que valorizam ovos brancos.</p></article>
+        <article><strong>Ovos vermelhos</strong><p>Linhagem para mercados que buscam ovos vermelhos, rusticidade e equilíbrio entre desempenho produtivo e qualidade final.</p></article>
+        <article><strong>Material técnico</strong><p>Guias de manejo e orientações de campo apoiam a condução dos lotes em diferentes fases.</p></article>
+      </div>
+    </section>
+  </main>`;
+}
+
+function lineageCard(p, image, i) {
+  return `<article class="lineage-card reveal"><div class="product-media product-media-${i + 1}" style="background-image:url('/${e(image || "")}')"><span>0${i + 1}</span></div><div><span>${e(p.egg)}</span><h3>${e(p.name)}</h3><p>${e(p.description)}</p><strong>${e(p.strength)}</strong>${(p.guides || []).length ? `<div class="lineage-actions">${(p.guides || []).map(g => `<a class="button primary" href="${e(g.file)}" target="_blank" rel="noopener">${e(g.label || "Baixar guia de manejo")}</a>`).join("")}</div>` : ""}</div></article>`;
 }
 
 function renderRepresentatives(data) {
@@ -1171,7 +1196,30 @@ function renderAbout(data) {
 function renderTechnical(data) {
   const items = data.technical || [];
   const categories = ["Todos", ...new Set(items.map(i => i.category).filter(Boolean))];
-  return `<main><section class="page-hero technical-page-hero"><p class="eyebrow light">Área técnica</p><h1>Materiais técnicos para consulta.</h1><p>Guias de manejo, referências de ambiência e materiais de apoio para diferentes fases de criação e produção.</p></section><section class="library"><div class="library-heading"><p class="eyebrow">Biblioteca técnica</p><h2>Materiais disponíveis</h2><div class="technical-toolbar"><input type="search" placeholder="Buscar por manejo, ambiência ou qualidade" data-technical-search></div></div><div class="technical-tabs">${categories.map((c, i) => `<button class="technical-tab ${i === 0 ? "is-active" : ""}" type="button" data-technical-filter="${e(c === "Todos" ? "todos" : c)}">${e(c)}</button>`).join("")}</div><div class="technical-grid">${items.map(item => `<article class="technical-card reveal" data-technical-card data-category="${e(item.category)}"><span>${e(item.category)}</span><h3>${e(item.title)}</h3><p>${e(item.description)}</p><a href="${e(item.file)}" target="_blank" rel="noopener">Abrir material</a></article>`).join("")}</div></section><section class="split-info"><div><p class="eyebrow light">Suporte técnico</p><h2>Conteúdo organizado para apoiar a rotina de manejo.</h2></div><div class="info-grid"><article><strong>Manejo por fase</strong><p>Conteúdos para cria, recria, produção e transição.</p></article><article><strong>Indicadores do lote</strong><p>Leitura de consumo, peso, uniformidade e qualidade.</p></article><article><strong>Contato técnico</strong><p>A equipe Hy-Line direciona o atendimento adequado.</p></article></div></section></main>`;
+  return `<main class="content-page">
+    <section class="page-hero technical-page-hero">
+      <p class="eyebrow light">Área técnica</p>
+      <h1>Materiais técnicos para consulta.</h1>
+      <p>Guias de manejo, referências de ambiência e materiais de apoio para diferentes fases de criação e produção.</p>
+    </section>
+    <section class="content-band">
+      <div class="library-heading">
+        <p class="eyebrow">Biblioteca técnica</p>
+        <h2>Materiais disponíveis</h2>
+        <div class="technical-toolbar"><input type="search" placeholder="Buscar por manejo, ambiência ou qualidade" aria-label="Buscar material técnico" data-technical-search></div>
+      </div>
+      <div class="technical-tabs" aria-label="Categorias de materiais técnicos">${categories.map((c, i) => `<button class="technical-tab ${i === 0 ? "is-active" : ""}" type="button" data-technical-filter="${e(c === "Todos" ? "todos" : c)}">${e(c)}</button>`).join("")}</div>
+      <div class="technical-grid">${items.map(item => `<article class="technical-card reveal" data-technical-card data-category="${e(item.category)}"><span>${e(item.category)}</span><h3>${e(item.title)}</h3><p>${e(item.description)}</p><a href="${e(item.file)}" target="_blank" rel="noopener">Abrir material</a></article>`).join("")}</div>
+    </section>
+    <section class="split-info">
+      <div><p class="eyebrow light">Suporte técnico</p><h2>Conteúdo organizado para apoiar a rotina de manejo.</h2></div>
+      <div class="info-grid">
+        <article><strong>Manejo por fase</strong><p>Conteúdos organizados para cria, recria, produção e pontos críticos de transição.</p></article>
+        <article><strong>Indicadores do lote</strong><p>Leitura de consumo, peso, uniformidade, postura, mortalidade e qualidade de casca.</p></article>
+        <article><strong>Contato técnico</strong><p>A equipe Hy-Line direciona o atendimento adequado conforme a demanda.</p></article>
+      </div>
+    </section>
+  </main>`;
 }
 
 function renderRadar(data) {

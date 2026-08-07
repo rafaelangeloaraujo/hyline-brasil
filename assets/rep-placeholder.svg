@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" viewBox="0 0 240 240" role="img" aria-label="Foto do representante">
+  <rect width="240" height="240" fill="#003f70"/>
+  <path d="M0 184 240 112v128H0z" fill="#002d51"/>
+  <circle cx="120" cy="88" r="40" fill="#ffd500"/>
+  <path d="M54 206c10-42 34-66 66-66s56 24 66 66" fill="#ffd500"/>
+  <path d="M74 35h92v36H74z" rx="7" fill="#fff"/>
+  <text x="120" y="59" text-anchor="middle" font-family="Arial, sans-serif" font-size="18" font-weight="700" fill="#003f70">Hy-Line</text>
+</svg>

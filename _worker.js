@@ -973,9 +973,7 @@ export default {
 
 async function serveAsset(request, env) {
   if (!env.ASSETS) return new Response("Asset não configurado", { status: 404 });
-  const url = new URL(request.url);
-  url.pathname = url.pathname.replace(/^\/assets\//, "/");
-  return env.ASSETS.fetch(new Request(url, request));
+  return env.ASSETS.fetch(request);
 }
 
 async function getContent(env) {

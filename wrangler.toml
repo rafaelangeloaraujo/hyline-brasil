@@ -1,0 +1,7 @@
+name = "hyline-brasil"
+compatibility_date = "2026-08-07"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "hyline-site"
+database_id = "COLE_AQUI_O_DATABASE_ID_DO_D1"

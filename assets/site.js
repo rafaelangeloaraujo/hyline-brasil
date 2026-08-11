@@ -46,7 +46,18 @@ const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => 
   "'": "&#39;",
 }[char]));
 
-const renderState = (button, shouldPin = false) => {
+const resetStateSelection = () => {
+  const stage = document.querySelector("[data-representatives-stage]");
+  pinnedStateButton = null;
+  if (stage) stage.classList.remove("is-engaged");
+  statePins.forEach((item) => {
+    item.classList.remove("is-active");
+    item.setAttribute("aria-pressed", "false");
+  });
+  if (stateDetail) stateDetail.innerHTML = defaultStateDetail;
+};
+
+const renderState = (button) => {
   if (!stateDetail || !button) return;
   let state = {};
   try {
@@ -54,9 +65,7 @@ const renderState = (button, shouldPin = false) => {
   } catch (error) {
     state = {};
   }
-  if (shouldPin) {
-    pinnedStateButton = button;
-  }
+  pinnedStateButton = button;
   statePins.forEach((item) => item.classList.remove("is-active"));
   statePins.forEach((item) => item.setAttribute("aria-pressed", item === pinnedStateButton ? "true" : "false"));
   button.classList.add("is-active");
@@ -84,35 +93,65 @@ const renderState = (button, shouldPin = false) => {
       <span>Estado selecionado</span>
       <h3>${escapeHtml(state.name || "")} <small>${escapeHtml(state.code || "")}</small></h3>
       <p>${escapeHtml(state.region || "")}</p>
+      <button class="state-back-button" type="button" data-state-back>Voltar ao mapa</button>
     </div>
     ${cards}
   `;
 };
 
 statePins.forEach((button) => {
-  button.addEventListener("mouseenter", () => renderState(button));
-  button.addEventListener("focus", () => renderState(button));
-  button.addEventListener("click", () => renderState(button, true));
+  button.addEventListener("click", () => renderState(button));
 });
 
-document.querySelectorAll(".representatives-map-figure").forEach((map) => {
-  map.addEventListener("mouseleave", () => {
-    const stage = map.closest("[data-representatives-stage]");
-    if (pinnedStateButton) {
-      renderState(pinnedStateButton);
-      return;
-    }
-    if (stage) stage.classList.remove("is-engaged");
-    statePins.forEach((item) => {
-      item.classList.remove("is-active");
-      item.setAttribute("aria-pressed", "false");
-    });
-    if (stateDetail) stateDetail.innerHTML = defaultStateDetail;
-  });
+stateDetail?.addEventListener("click", (event) => {
+  if (event.target.closest("[data-state-back]")) resetStateSelection();
 });
 
 const activeState = document.querySelector(".state-pin.is-active");
 if (activeState) renderState(activeState);
+
+const currencyPanel = document.querySelector("[data-currency-panel]");
+if (currencyPanel) {
+  const currencyLabels = {
+    USDBRL: "Dólar",
+    EURBRL: "Euro",
+    GBPBRL: "Libra",
+  };
+  const formatMoney = (value) => Number(value || 0).toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  });
+  const formatDate = (timestamp) => {
+    if (!timestamp) return "Atualização indisponível";
+    return new Date(Number(timestamp) * 1000).toLocaleString("pt-BR", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  };
+
+  fetch("https://economia.awesomeapi.com.br/json/last/USD-BRL,EUR-BRL,GBP-BRL", { cache: "no-store" })
+    .then((response) => response.ok ? response.json() : Promise.reject(new Error("Falha ao carregar câmbio")))
+    .then((rates) => {
+      currencyPanel.innerHTML = Object.entries(currencyLabels).map(([key, label]) => {
+        const rate = rates[key] || {};
+        const variation = Number(rate.pctChange || 0);
+        const variationClass = variation >= 0 ? "is-up" : "is-down";
+        return `<article class="currency-card">
+          <span>${label}</span>
+          <strong>${formatMoney(rate.bid)}</strong>
+          <small>Fechamento: ${formatMoney(rate.ask || rate.bid)}</small>
+          <em class="${variationClass}">${variation.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</em>
+          <small>${formatDate(rate.timestamp)}</small>
+        </article>`;
+      }).join("");
+    })
+    .catch(() => {
+      currencyPanel.innerHTML = "<p>Não foi possível carregar as cotações agora.</p>";
+    });
+}
 
 const technicalSearch = document.querySelector("[data-technical-search]");
 const technicalTabs = document.querySelectorAll("[data-technical-filter]");

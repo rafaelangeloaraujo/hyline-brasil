@@ -79,9 +79,9 @@ const defaultContent = {
       },
       "artigos": {
         "title": "Artigos | Hy-Line do Brasil",
-        "description": "Artigos t?cnicos e institucionais da Hy-Line do Brasil sobre gen?tica de postura, manejo, sanidade, mercado e produ??o de ovos.",
+        "description": "Artigos técnicos e institucionais da Hy-Line do Brasil sobre genética de postura, manejo, sanidade, mercado e produção de ovos.",
         "canonical": "/artigos.php",
-        "keywords": "artigos Hy-Line, avicultura de postura, manejo de poedeiras, gen?tica de postura"
+        "keywords": "artigos Hy-Line, avicultura de postura, manejo de poedeiras, genética de postura"
       }
     }
   },
@@ -297,7 +297,7 @@ const defaultContent = {
         "y": 24.46,
         "representatives": [
           {
-            "name": "Ant?nio Rocha",
+            "name": "Antônio Rocha",
             "role": "Representante regional",
             "phone": "81 99852-1990",
             "email": "",
@@ -606,7 +606,7 @@ const defaultContent = {
         "y": 40.23,
         "representatives": [
           {
-            "name": "Ant?nio Rocha",
+            "name": "Antônio Rocha",
             "role": "Representante regional",
             "phone": "81 99852-1990",
             "email": "",
@@ -622,7 +622,7 @@ const defaultContent = {
         "y": 9.96,
         "representatives": [
           {
-            "name": "Ant?nio Rocha",
+            "name": "Antônio Rocha",
             "role": "Representante regional",
             "phone": "81 99852-1990",
             "email": "",
@@ -675,7 +675,7 @@ const defaultContent = {
             "photo": "assets/rep-placeholder.svg"
           },
           {
-            "name": "Andr? Morio",
+            "name": "André Morio",
             "role": "Representante regional",
             "phone": "14 99761-1546",
             "email": "",
@@ -726,28 +726,28 @@ const defaultContent = {
     "technicalTeam": [
       {
         "name": "Glauco",
-        "role": "Gerente T?cnico",
+        "role": "Gerente Técnico",
         "phone": "17 99619-5600",
         "email": "",
         "photo": "assets/rep-placeholder.svg"
       },
       {
         "name": "Luiz Henrique",
-        "role": "Equipe t?cnica N/NE",
+        "role": "Equipe técnica N/NE",
         "phone": "17 99668-3768",
         "email": "",
         "photo": "assets/rep-placeholder.svg"
       },
       {
         "name": "Bruno Guastalli",
-        "role": "Equipe t?cnica ES/SP/RJ",
+        "role": "Equipe técnica ES/SP/RJ",
         "phone": "17 99611-2880",
         "email": "",
         "photo": "assets/rep-placeholder.svg"
       },
       {
         "name": "Cesar Gamboa",
-        "role": "Equipe t?cnica MG/SC/RS/GO",
+        "role": "Equipe técnica MG/SC/RS/GO",
         "phone": "17 99791-2489",
         "email": "",
         "photo": "assets/rep-placeholder.svg"
@@ -762,7 +762,7 @@ const defaultContent = {
         "photo": "assets/rep-placeholder.svg"
       },
       {
-        "name": "Ant?nio Augusto",
+        "name": "Antônio Augusto",
         "role": "Programador",
         "phone": "17 99646-2366",
         "email": "",
@@ -942,24 +942,24 @@ const defaultContent = {
   ],
   "articles": [
     {
-      "title": "Gen?tica de postura e adapta??o ao Brasil",
-      "category": "Gen?tica",
+      "title": "Genética de postura e adaptação ao Brasil",
+      "category": "Genética",
       "date": "2026-08-11",
-      "summary": "Uma leitura sobre como sele??o gen?tica, sanidade e acompanhamento t?cnico precisam conversar com as condi??es reais de produ??o no pa?s.",
+      "summary": "Uma leitura sobre como seleção genética, sanidade e acompanhamento técnico precisam conversar com as condições reais de produção no país.",
       "url": "#"
     },
     {
-      "title": "Indicadores de manejo que merecem aten??o no lote",
+      "title": "Indicadores de manejo que merecem atenção no lote",
       "category": "Manejo",
       "date": "2026-08-11",
-      "summary": "Consumo, uniformidade, peso corporal, viabilidade e qualidade de ovos ajudam a orientar decis?es t?cnicas ao longo do ciclo.",
+      "summary": "Consumo, uniformidade, peso corporal, viabilidade e qualidade de ovos ajudam a orientar decisões técnicas ao longo do ciclo.",
       "url": "#"
     },
     {
-      "title": "Bem-estar animal como rotina de produ??o",
+      "title": "Bem-estar animal como rotina de produção",
       "category": "Bem-estar animal",
       "date": "2026-08-11",
-      "summary": "Ambi?ncia, nutri??o, sanidade e equipe treinada formam uma base pr?tica para um manejo mais consistente.",
+      "summary": "Ambiência, nutrição, sanidade e equipe treinada formam uma base prática para um manejo mais consistente.",
       "url": "#"
     }
   ]

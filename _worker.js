@@ -76,6 +76,12 @@ const defaultContent = {
         "description": "Acompanhe indicadores CEPEA do mercado de ovos comerciais em uma página objetiva da Hy-Line do Brasil.",
         "canonical": "/radar-mercado.php",
         "keywords": "radar do mercado ovos, CEPEA ovos, preço ovos comerciais, Hy-Line do Brasil"
+      },
+      "artigos": {
+        "title": "Artigos | Hy-Line do Brasil",
+        "description": "Artigos t?cnicos e institucionais da Hy-Line do Brasil sobre gen?tica de postura, manejo, sanidade, mercado e produ??o de ovos.",
+        "canonical": "/artigos.php",
+        "keywords": "artigos Hy-Line, avicultura de postura, manejo de poedeiras, gen?tica de postura"
       }
     }
   },
@@ -233,7 +239,7 @@ const defaultContent = {
     }
   ],
   "representatives": {
-    "intro": "Passe o mouse sobre um estado no mapa para consultar os contatos de atendimento da Hy-Line do Brasil.",
+    "intro": "Clique em um estado no mapa para consultar os contatos de atendimento da Hy-Line do Brasil.",
     "states": [
       {
         "code": "AC",
@@ -933,8 +939,32 @@ const defaultContent = {
       "description": "Material técnico importado da Livraria Técnica Hy-Line para consulta da equipe e produtores.",
       "file": "http://fluig.hyline.com.br:8080/volume/stream/Rmx1aWc=/P3Q9MSZ2b2w9RGVmYXVsdCZpZD03MDM2NTImdmVyPTEwMDAmZmlsZT1BUlRJR08rVElBTUlOQS5wZGYmY3JjPTE2MDg4OTU1NTImc2l6ZT0wLjI5NDIwMyZ1SWQ9MjAmZlNJZD0xJnVTSWQ9MSZkPWZhbHNlJnRrbj0mcHVibGljVXJsPXRydWU=.pdf"
     }
+  ],
+  "articles": [
+    {
+      "title": "Gen?tica de postura e adapta??o ao Brasil",
+      "category": "Gen?tica",
+      "date": "2026-08-11",
+      "summary": "Uma leitura sobre como sele??o gen?tica, sanidade e acompanhamento t?cnico precisam conversar com as condi??es reais de produ??o no pa?s.",
+      "url": "#"
+    },
+    {
+      "title": "Indicadores de manejo que merecem aten??o no lote",
+      "category": "Manejo",
+      "date": "2026-08-11",
+      "summary": "Consumo, uniformidade, peso corporal, viabilidade e qualidade de ovos ajudam a orientar decis?es t?cnicas ao longo do ciclo.",
+      "url": "#"
+    },
+    {
+      "title": "Bem-estar animal como rotina de produ??o",
+      "category": "Bem-estar animal",
+      "date": "2026-08-11",
+      "summary": "Ambi?ncia, nutri??o, sanidade e equipe treinada formam uma base pr?tica para um manejo mais consistente.",
+      "url": "#"
+    }
   ]
 };
+
 const pageMap = new Map([
   ["/", "home"],
   ["/index.php", "home"],
@@ -943,6 +973,7 @@ const pageMap = new Map([
   ["/bem-estar-animal.php", "bem-estar"],
   ["/pesquisa-desenvolvimento.php", "pesquisa"],
   ["/sobre-nos.php", "sobre"],
+  ["/artigos.php", "artigos"],
   ["/recursos-tecnicos.php", "recursos"],
   ["/radar-mercado.php", "radar"],
   ["/contato.php", "contato"],
@@ -1029,6 +1060,7 @@ function renderPage(page, data, request) {
     "bem-estar": renderWelfare,
     pesquisa: renderResearch,
     sobre: renderAbout,
+    artigos: renderArticles,
     recursos: renderTechnical,
     radar: renderRadar,
     contato: renderContact,
@@ -1093,7 +1125,7 @@ function header(data) {
     <a class="brand" href="/" aria-label="Hy-Line do Brasil"><img class="brand-logo" src="/${e(data.images?.logo || "assets/hyline-logo-brasil-new.png")}" alt="Hy-Line do Brasil"></a>
     <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
     <nav class="main-nav" aria-label="Menu principal">
-      <a href="/">Início</a><a href="/produtos.php">Produtos</a><a href="/sobre-nos.php">Sobre nós</a><a href="/pesquisa-desenvolvimento.php">P&D</a><a href="/bem-estar-animal.php">Bem-estar animal</a><a href="/representantes.php">Representantes</a><a href="/contato.php">Contato</a><a class="nav-radar" href="/radar-mercado.php"><span class="radar-dot" aria-hidden="true"></span>Radar do Mercado</a><a class="nav-technical" href="/recursos-tecnicos.php">Recursos técnicos</a>
+      <a href="/">Início</a><a href="/produtos.php">Produtos</a><a href="/sobre-nos.php">Sobre nós</a><a href="/pesquisa-desenvolvimento.php">P&D</a><a href="/bem-estar-animal.php">Bem-estar animal</a><a href="/representantes.php">Representantes</a><a href="/artigos.php">Artigos</a><a href="/contato.php">Contato</a><a class="nav-radar" href="/radar-mercado.php"><span class="radar-dot" aria-hidden="true"></span>Radar do Mercado</a><a class="nav-technical" href="/recursos-tecnicos.php">Recursos técnicos</a>
     </nav>
   </header>`;
 }
@@ -1129,6 +1161,7 @@ function renderHome(data) {
     <section class="research-band"><div><p class="eyebrow light">Pesquisa e desenvolvimento</p><h2>${e(data.research?.title)}</h2><p>${e(data.research?.text)}</p></div><strong class="research-number">01</strong><div class="research-points"><span>Seleção genética</span><span>Eficiência alimentar</span><span>Qualidade do ovo</span><span>Segurança sanitária</span></div></section>
     <section class="representatives-shortcut"><div><p class="eyebrow light">Representantes</p><h2>Consulte os contatos Hy-Line por região.</h2><p>O mapa de representantes reúne canais de atendimento para diferentes estados do Brasil.</p><a class="button yellow" href="/representantes.php">Abrir mapa de representantes</a></div><div class="representatives-shortcut-map"><img src="/${e(data.images?.representativesMap)}" alt=""></div></section>
     <section class="market-radar-shortcut"><div><p class="eyebrow light"><span class="radar-dot" aria-hidden="true"></span>Radar do Mercado</p><h2>Indicadores para acompanhar o mercado de ovos.</h2><p>Uma leitura objetiva de preços e referências setoriais, reunida em uma página leve para consulta rápida.</p></div><a class="button yellow reveal" href="/radar-mercado.php">Acessar Radar do Mercado</a></section>
+    ${articlesPreview(data)}
     ${technicalPreview(data)}
     ${contactBlock(data)}
   </main>`;
@@ -1173,7 +1206,7 @@ function lineageCard(p, image, i) {
 
 function renderRepresentatives(data) {
   const states = data.representatives?.states || [];
-  return `<main class="representatives-page"><section class="representatives-page-hero"><div><p class="eyebrow light">Representantes</p><h1>Atendimento Hy-Line por estado.</h1></div><p>Passe o mouse ou clique no estado desejado para consultar representantes e canais de atendimento por região.</p></section><section class="representatives-stage" data-representatives-stage><div class="representatives-map-board"><figure class="representatives-map-figure"><img src="/${e(data.images?.representativesMap)}" alt="Mapa do Brasil com estados">${states.map(s => `<button class="state-pin state-hotspot state-hotspot-${e(String(s.code || "").toLowerCase())}" type="button" style="--x:${e(s.x)}%;--y:${e(s.y)}%;" data-state="${e(JSON.stringify(s))}" aria-label="${e(`${s.name} - ${s.region}`)}"><span>${e(s.code)}</span></button>`).join("")}</figure></div><aside class="representatives-info-panel" data-state-detail aria-live="polite"><div class="state-detail-header"><span>Selecione um estado</span><h3>Atendimento por região</h3><p>As informações aparecerão aqui ao passar o mouse sobre uma UF.</p></div></aside></section>${supportContacts(data)}</main>`;
+  return `<main class="representatives-page"><section class="representatives-page-hero"><div><p class="eyebrow light">Representantes</p><h1>Atendimento Hy-Line por estado.</h1></div><p>Clique no estado desejado para consultar representantes e canais de atendimento por região.</p></section><section class="representatives-stage" data-representatives-stage><div class="representatives-map-board"><figure class="representatives-map-figure"><img src="/${e(data.images?.representativesMap)}" alt="Mapa do Brasil com estados">${states.map(s => `<button class="state-pin state-hotspot state-hotspot-${e(String(s.code || "").toLowerCase())}" type="button" style="--x:${e(s.x)}%;--y:${e(s.y)}%;" data-state="${e(JSON.stringify(s))}" aria-label="${e(`${s.name} - ${s.region}`)}"><span>${e(s.code)}</span></button>`).join("")}</figure></div><aside class="representatives-info-panel" data-state-detail aria-live="polite"><div class="state-detail-header"><span>Selecione um estado</span><h3>Atendimento por região</h3><p>As informações aparecerão aqui depois do clique em uma UF.</p></div></aside></section>${supportContacts(data)}</main>`;
 }
 
 function supportContacts(data) {
@@ -1191,6 +1224,39 @@ function renderResearch(data) {
 
 function renderAbout(data) {
   return `<main><section class="page-hero about-page-hero"><p class="eyebrow light">Sobre nós</p><h1>${e(data.about?.title)}</h1><p>${e(data.about?.text)}</p></section><section class="story section story-expanded"><div class="content-heading"><p class="eyebrow">Atuação</p><h2>Presença local para adaptar a genética global à realidade brasileira.</h2></div><div class="story-columns"><article><strong>Estrutura produtiva</strong><p>Operação própria, capacidade produtiva e processos sanitários.</p></article><article><strong>Ciência no Brasil</strong><p>Pesquisa global conectada a dados locais.</p></article><article><strong>Atendimento técnico</strong><p>Representantes, materiais e equipe técnica apoiam o campo.</p></article></div></section><section class="about-pillars"><div class="about-pillar-grid">${["Genética com aplicação prática", "Sanidade e biossegurança", "Conteúdo para decisão", "Proximidade regional"].map((t, i) => `<article><span>0${i + 1}</span><h3>${t}</h3><p>Uma base institucional para apoiar a avicultura de postura com responsabilidade técnica.</p></article>`).join("")}</div></section>${highlights(data)}</main>`;
+}
+
+function getArticles(data) {
+  return Array.isArray(data.articles) && data.articles.length ? data.articles : defaultContent.articles || [];
+}
+
+function renderArticles(data) {
+  const articles = getArticles(data);
+  return `<main class="content-page articles-page">
+    <section class="page-hero articles-page-hero">
+      <p class="eyebrow light">Artigos</p>
+      <h1>Leituras técnicas e institucionais.</h1>
+      <p>Conteúdos objetivos sobre genética, manejo, sanidade, mercado e temas que ajudam a contextualizar a avicultura de postura.</p>
+    </section>
+    <section class="content-band articles-band">
+      <div class="content-heading">
+        <p class="eyebrow">Publicações</p>
+        <h2>Artigos para consulta.</h2>
+        <p>Esta área pode ser atualizada pelo painel administrativo editando o bloco <strong>articles</strong> do conteúdo.</p>
+      </div>
+      <div class="articles-grid">${articles.map(articleCard).join("")}</div>
+    </section>
+  </main>`;
+}
+
+function articleCard(article) {
+  return `<article class="article-card reveal">
+    <span>${e(article.category || "Artigo")}</span>
+    <h3>${e(article.title)}</h3>
+    <p>${e(article.summary)}</p>
+    <small>${e(article.date || "")}</small>
+    <a href="${e(article.url || "#")}" ${article.url && article.url !== "#" ? 'target="_blank" rel="noopener"' : ""}>Ler artigo</a>
+  </article>`;
 }
 
 function renderTechnical(data) {
@@ -1223,11 +1289,16 @@ function renderTechnical(data) {
 }
 
 function renderRadar(data) {
-  return `<main><section class="page-hero radar-page-hero"><p class="eyebrow light"><span class="radar-dot" aria-hidden="true"></span>Radar do Mercado</p><h1>Indicadores para acompanhar o mercado de ovos.</h1><p>Uma área de consulta rápida para acompanhar referências de preços e movimentos relevantes da cadeia de postura comercial.</p></section><section class="radar-content-split"><div class="radar-text-panel reveal"><p class="eyebrow">Leitura de mercado</p><h2>Informação objetiva para decisões mais bem contextualizadas.</h2><p>O Radar do Mercado reúne indicadores publicados pelo CEPEA para facilitar a consulta de referências regionais.</p><div class="radar-info-list"><article><strong>Preços de referência</strong><span>Indicadores de ovos brancos e vermelhos em praças acompanhadas pelo CEPEA.</span></article><article><strong>Consulta rápida</strong><span>Widget externo mantido na página para acesso direto aos dados atualizados.</span></article><article><strong>Contexto setorial</strong><span>Use as informações como ponto de partida para conversar com equipe técnica e representantes.</span></article></div></div><div class="market-widget-card reveal"><div class="market-widget-head"><span><span class="radar-dot" aria-hidden="true"></span>Atualização externa</span><small>Fonte: CEPEA/ESALQ</small></div><div class="cepea-widget"><script type="text/javascript" src="https://cepea.org.br/br/widgetproduto.js.php?fonte=arial&tamanho=10&largura=400px&corfundo=ffd500&cortexto=000000&corlinha=003f70&id_indicador%5B%5D=159-Bastos+(SP)+-+FOB-branco&id_indicador%5B%5D=12"></script></div></div></section></main>`;
+  return `<main><section class="page-hero radar-page-hero"><p class="eyebrow light"><span class="radar-dot" aria-hidden="true"></span>Radar do Mercado</p><h1>Indicadores para acompanhar o mercado de ovos.</h1><p>Uma área de consulta rápida para acompanhar referências de preços, câmbio e movimentos relevantes da cadeia de postura comercial.</p></section><section class="radar-content-split"><div class="radar-text-panel reveal"><p class="eyebrow">Leitura de mercado</p><h2>Informação objetiva para decisões mais bem contextualizadas.</h2><p>O Radar do Mercado reúne indicadores publicados pelo CEPEA e referências cambiais para facilitar consultas rápidas.</p><div class="radar-info-list"><article><strong>Preços de referência</strong><span>Indicadores de ovos brancos e vermelhos em praças acompanhadas pelo CEPEA.</span></article><article><strong>Câmbio</strong><span>Dólar, euro e libra em reais, com variação do fechamento anterior.</span></article><article><strong>Contexto setorial</strong><span>Use as informações como ponto de partida para conversar com equipe técnica e representantes.</span></article></div></div><div class="market-widget-card reveal"><div class="market-widget-head"><span><span class="radar-dot" aria-hidden="true"></span>Atualização externa</span><small>Fontes: CEPEA/ESALQ e AwesomeAPI</small></div><div class="currency-panel" data-currency-panel><p>Carregando câmbio...</p></div><div class="cepea-widget"><script type="text/javascript" src="https://cepea.org.br/br/widgetproduto.js.php?fonte=arial&tamanho=10&largura=400px&corfundo=1d3ec2&cortexto=000000&corlinha=ebd441&id_indicador%5B%5D=159-Bastos+(SP)+-+FOB-branco&id_indicador%5B%5D=159-Grande+BH+-+(MG)+-+CIF-branco&id_indicador%5B%5D=159-Grande+SP+(SP)+-+CIF-branco&id_indicador%5B%5D=159-Recife+(PE)+-+CIF-branco&id_indicador%5B%5D=159-S.+M.+de+Jetib%C3%A1+(ES)+-+FOB-branco&id_indicador%5B%5D=159-Bastos+(SP)+-+FOB-vermelho&id_indicador%5B%5D=159-Grande+BH+-+(MG)+-+CIF-vermelho&id_indicador%5B%5D=159-Grande+SP+(SP)+-+CIF-vermelho&id_indicador%5B%5D=159-Recife+(PE)+-+CIF-vermelho&id_indicador%5B%5D=159-S.+M.+de+Jetib%C3%A1+(ES)+-+FOB-vermelho&id_indicador%5B%5D=12&id_indicador%5B%5D=92&id_indicador%5B%5D=77&id_indicador%5B%5D=178"></script></div></div></section></main>`;
 }
 
 function renderContact(data) {
-  return `<main><section class="page-hero contact-page-hero"><p class="eyebrow light">Contato</p><h1>Fale com a Hy-Line do Brasil.</h1><p>Envie sua mensagem para atendimento institucional, técnico ou regional. A equipe direciona o contato pelo canal informado.</p></section><section class="contact-page-section"><div class="contact-card"><strong>Canais</strong><a href="mailto:${e(data.site?.email)}">${e(data.site?.email)}</a><span>${e(data.site?.phone)}</span><span>${e(data.site?.address)}</span><a class="button yellow" href="/representantes.php">Ver representantes</a></div><form class="contact-form" action="/send-contact.php" method="post"><div class="form-row"><label>Nome<input name="name" required></label><label>E-mail<input type="email" name="email" required></label></div><div class="form-row"><label>Telefone<input name="phone"></label><label>Assunto<input name="subject"></label></div><label>Mensagem<textarea name="message" rows="6" required></textarea></label><button class="button yellow" type="submit">Enviar informações</button></form></section></main>`;
+  return `<main><section class="page-hero contact-page-hero"><p class="eyebrow light">Contato</p><h1>Fale com a Hy-Line do Brasil.</h1><p>Envie sua mensagem para atendimento institucional, técnico ou regional. A equipe direciona o contato pelo canal informado.</p></section><section class="contact-page-section"><div class="contact-info-panel"><p class="eyebrow light">Canais</p><h2>Atendimento direto e regional.</h2><a href="mailto:${e(data.site?.email)}">${e(data.site?.email)}</a><span>${e(data.site?.phone)}</span><span>${e(data.site?.address)}</span><a class="button yellow" href="/representantes.php">Ver representantes</a></div><form class="contact-form contact-form-page" action="/send-contact.php" method="post"><div class="form-row"><label>Nome<input name="name" required></label><label>E-mail<input type="email" name="email" required></label></div><div class="form-row"><label>Telefone<input name="phone"></label><label>Assunto<input name="subject"></label></div><label>Mensagem<textarea name="message" rows="6" required></textarea></label><button class="button yellow" type="submit">Enviar informações</button></form></section></main>`;
+}
+
+function articlesPreview(data) {
+  const articles = getArticles(data).slice(0, 3);
+  return `<section class="articles-preview section"><div class="library-heading reveal"><p class="eyebrow">Artigos</p><h2>Leituras para acompanhar o setor.</h2><a class="button primary" href="/artigos.php">Ver todos os artigos</a></div><div class="articles-grid">${articles.map(articleCard).join("")}</div></section>`;
 }
 
 function technicalPreview(data) {
@@ -1323,7 +1394,7 @@ function contactResult(ok, message) {
 
 async function renderSitemap(request, env) {
   const origin = new URL(request.url).origin;
-  const paths = ["/", "/produtos.php", "/representantes.php", "/bem-estar-animal.php", "/pesquisa-desenvolvimento.php", "/sobre-nos.php", "/radar-mercado.php", "/recursos-tecnicos.php", "/contato.php"];
+  const paths = ["/", "/produtos.php", "/representantes.php", "/bem-estar-animal.php", "/pesquisa-desenvolvimento.php", "/sobre-nos.php", "/artigos.php", "/radar-mercado.php", "/recursos-tecnicos.php", "/contato.php"];
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map(p => `<url><loc>${origin}${p}</loc></url>`).join("")}</urlset>`;
 }
 

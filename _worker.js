@@ -947,20 +947,6 @@ const defaultContent = {
       "date": "2026-08-11",
       "summary": "Uma leitura sobre como seleção genética, sanidade e acompanhamento técnico precisam conversar com as condições reais de produção no país.",
       "url": "#"
-    },
-    {
-      "title": "Indicadores de manejo que merecem atenção no lote",
-      "category": "Manejo",
-      "date": "2026-08-11",
-      "summary": "Consumo, uniformidade, peso corporal, viabilidade e qualidade de ovos ajudam a orientar decisões técnicas ao longo do ciclo.",
-      "url": "#"
-    },
-    {
-      "title": "Bem-estar animal como rotina de produção",
-      "category": "Bem-estar animal",
-      "date": "2026-08-11",
-      "summary": "Ambiência, nutrição, sanidade e equipe treinada formam uma base prática para um manejo mais consistente.",
-      "url": "#"
     }
   ]
 };
@@ -1242,7 +1228,6 @@ function renderArticles(data) {
       <div class="content-heading">
         <p class="eyebrow">Publicações</p>
         <h2>Artigos para consulta.</h2>
-        <p>Esta área pode ser atualizada pelo painel administrativo editando o bloco <strong>articles</strong> do conteúdo.</p>
       </div>
       <div class="articles-grid">${articles.map(articleCard).join("")}</div>
     </section>

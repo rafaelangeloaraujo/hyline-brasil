@@ -38,6 +38,69 @@ const stateDetail = document.querySelector("[data-state-detail]");
 const statePins = document.querySelectorAll(".state-pin");
 const defaultStateDetail = stateDetail ? stateDetail.innerHTML : "";
 let pinnedStateButton = null;
+const pageLang = document.body?.dataset.lang || "pt";
+const uiText = {
+  pt: {
+    selectedState: "Estado selecionado",
+    backToMap: "Voltar ao mapa",
+    defaultRole: "Atendimento comercial",
+    representativeAlt: "representante",
+    representativeName: "Representante Hy-Line",
+    openWhatsapp: "Abrir WhatsApp para",
+    dollar: "Dólar",
+    euro: "Euro",
+    pound: "Libra",
+    exchangeUnavailable: "Atualização indisponível",
+    exchangeError: "Não foi possível carregar as cotações agora.",
+    closing: "Fechamento",
+    videoTitle: "Vídeo institucional",
+    cookieNotice: "Aviso de cookies",
+    cookieTitle: "Permissão de cookies",
+    cookieText: "Usamos cookies para melhorar sua experiência, entender a navegação no site e apoiar o atendimento da Hy-Line do Brasil.",
+    decline: "Recusar",
+    acceptCookies: "Aceitar cookies",
+  },
+  en: {
+    selectedState: "Selected state",
+    backToMap: "Back to map",
+    defaultRole: "Commercial support",
+    representativeAlt: "representative",
+    representativeName: "Hy-Line representative",
+    openWhatsapp: "Open WhatsApp for",
+    dollar: "Dollar",
+    euro: "Euro",
+    pound: "Pound",
+    exchangeUnavailable: "Update unavailable",
+    exchangeError: "Exchange rates could not be loaded right now.",
+    closing: "Close",
+    videoTitle: "Institutional video",
+    cookieNotice: "Cookie notice",
+    cookieTitle: "Cookie permission",
+    cookieText: "We use cookies to improve your experience, understand site navigation and support Hy-Line Brazil service.",
+    decline: "Decline",
+    acceptCookies: "Accept cookies",
+  },
+  es: {
+    selectedState: "Estado seleccionado",
+    backToMap: "Volver al mapa",
+    defaultRole: "Atención comercial",
+    representativeAlt: "representante",
+    representativeName: "Representante Hy-Line",
+    openWhatsapp: "Abrir WhatsApp para",
+    dollar: "Dólar",
+    euro: "Euro",
+    pound: "Libra",
+    exchangeUnavailable: "Actualización no disponible",
+    exchangeError: "No fue posible cargar las cotizaciones ahora.",
+    closing: "Cierre",
+    videoTitle: "Video institucional",
+    cookieNotice: "Aviso de cookies",
+    cookieTitle: "Permiso de cookies",
+    cookieText: "Usamos cookies para mejorar su experiencia, entender la navegación en el sitio y apoyar la atención de Hy-Line Brasil.",
+    decline: "Rechazar",
+    acceptCookies: "Aceptar cookies",
+  },
+}[pageLang] || {};
 const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({
   "&": "&amp;",
   "<": "&lt;",
@@ -45,6 +108,19 @@ const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => 
   "\"": "&quot;",
   "'": "&#39;",
 }[char]));
+
+const whatsappHref = (phone) => {
+  const digits = String(phone || "").replace(/\D+/g, "");
+  if (!digits) return "";
+  const normalized = digits.length <= 11 ? `55${digits}` : digits;
+  return `https://wa.me/${normalized}`;
+};
+
+const whatsappPhoneLink = (phone) => {
+  const href = whatsappHref(phone);
+  if (!href) return "";
+  return `<a class="whatsapp-phone" href="${escapeHtml(href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(uiText.openWhatsapp)} ${escapeHtml(phone)}"><span class="whatsapp-mini" aria-hidden="true"></span>${escapeHtml(phone)}</a>`;
+};
 
 const resetStateSelection = () => {
   const stage = document.querySelector("[data-representatives-stage]");
@@ -73,15 +149,15 @@ const renderState = (button) => {
   if (stage) stage.classList.add("is-engaged");
   const reps = Array.isArray(state.representatives) ? state.representatives : [];
   const cards = reps.map((rep) => {
-    const phone = rep.phone ? `<span>${escapeHtml(rep.phone)}</span>` : "";
+    const phone = rep.phone ? whatsappPhoneLink(rep.phone) : "";
     const email = rep.email ? `<a href="mailto:${escapeHtml(rep.email)}">${escapeHtml(rep.email)}</a>` : "";
 
     return `
       <article class="rep-card">
-        <img src="${escapeHtml(rep.photo || "assets/rep-placeholder.svg")}" alt="Foto de ${escapeHtml(rep.name || "representante")}">
+        <img src="${escapeHtml(rep.photo || "assets/rep-placeholder.svg")}" alt="Foto de ${escapeHtml(rep.name || uiText.representativeAlt)}">
         <div>
-          <strong>${escapeHtml(rep.name || "Representante Hy-Line")}</strong>
-          <small>${escapeHtml(rep.role || "Atendimento comercial")}</small>
+          <strong>${escapeHtml(rep.name || uiText.representativeName)}</strong>
+          <small>${escapeHtml(rep.role || uiText.defaultRole)}</small>
           ${phone}
           ${email}
         </div>
@@ -90,10 +166,10 @@ const renderState = (button) => {
   }).join("");
   stateDetail.innerHTML = `
     <div class="state-detail-header">
-      <span>Estado selecionado</span>
+      <span>${escapeHtml(uiText.selectedState)}</span>
       <h3>${escapeHtml(state.name || "")} <small>${escapeHtml(state.code || "")}</small></h3>
       <p>${escapeHtml(state.region || "")}</p>
-      <button class="state-back-button" type="button" data-state-back>Voltar ao mapa</button>
+      <button class="state-back-button" type="button" data-state-back>${escapeHtml(uiText.backToMap)}</button>
     </div>
     ${cards}
   `;
@@ -113,16 +189,16 @@ if (activeState) renderState(activeState);
 const currencyPanel = document.querySelector("[data-currency-panel]");
 if (currencyPanel) {
   const currencyLabels = {
-    USDBRL: "Dólar",
-    EURBRL: "Euro",
-    GBPBRL: "Libra",
+    USDBRL: uiText.dollar,
+    EURBRL: uiText.euro,
+    GBPBRL: uiText.pound,
   };
   const formatMoney = (value) => Number(value || 0).toLocaleString("pt-BR", {
     style: "currency",
     currency: "BRL",
   });
   const formatDate = (timestamp) => {
-    if (!timestamp) return "Atualização indisponível";
+    if (!timestamp) return uiText.exchangeUnavailable;
     return new Date(Number(timestamp) * 1000).toLocaleString("pt-BR", {
       day: "2-digit",
       month: "2-digit",
@@ -142,14 +218,14 @@ if (currencyPanel) {
         return `<article class="currency-card">
           <span>${label}</span>
           <strong>${formatMoney(rate.bid)}</strong>
-          <small>Fechamento: ${formatMoney(rate.ask || rate.bid)}</small>
+          <small>${escapeHtml(uiText.closing)}: ${formatMoney(rate.ask || rate.bid)}</small>
           <em class="${variationClass}">${variation.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}%</em>
           <small>${formatDate(rate.timestamp)}</small>
         </article>`;
       }).join("");
     })
     .catch(() => {
-      currencyPanel.innerHTML = "<p>Não foi possível carregar as cotações agora.</p>";
+      currencyPanel.innerHTML = `<p>${escapeHtml(uiText.exchangeError)}</p>`;
     });
 }
 
@@ -195,7 +271,7 @@ document.querySelectorAll("[data-video-src]").forEach((button) => {
     if (!source) return;
     const iframe = document.createElement("iframe");
     iframe.src = source;
-    iframe.title = button.getAttribute("aria-label") || "Vídeo institucional";
+    iframe.title = button.getAttribute("aria-label") || uiText.videoTitle;
     iframe.loading = "lazy";
     iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
     iframe.allowFullscreen = true;
@@ -222,15 +298,15 @@ const cookieConsentKey = "hyline_cookie_consent";
 if (!localStorage.getItem(cookieConsentKey)) {
   const cookieBanner = document.createElement("section");
   cookieBanner.className = "cookie-consent";
-  cookieBanner.setAttribute("aria-label", "Aviso de cookies");
+  cookieBanner.setAttribute("aria-label", uiText.cookieNotice);
   cookieBanner.innerHTML = `
     <div>
-      <strong>Permiss\u00e3o de cookies</strong>
-      <p>Usamos cookies para melhorar sua experi\u00eancia, entender a navega\u00e7\u00e3o no site e apoiar o atendimento da Hy-Line do Brasil.</p>
+      <strong>${escapeHtml(uiText.cookieTitle)}</strong>
+      <p>${escapeHtml(uiText.cookieText)}</p>
     </div>
     <div class="cookie-consent-actions">
-      <button type="button" class="cookie-decline">Recusar</button>
-      <button type="button" class="cookie-accept">Aceitar cookies</button>
+      <button type="button" class="cookie-decline">${escapeHtml(uiText.decline)}</button>
+      <button type="button" class="cookie-accept">${escapeHtml(uiText.acceptCookies)}</button>
     </div>
   `;
   document.body.appendChild(cookieBanner);

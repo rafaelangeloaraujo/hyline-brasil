@@ -82,6 +82,12 @@ const defaultContent = {
         "description": "Artigos técnicos e institucionais da Hy-Line do Brasil sobre genética de postura, manejo, sanidade, mercado e produção de ovos.",
         "canonical": "/artigos.php",
         "keywords": "artigos Hy-Line, avicultura de postura, manejo de poedeiras, genética de postura"
+      },
+      "intranet": {
+        "title": "Intranet | Hy-Line do Brasil",
+        "description": "Atalhos oficiais da Intranet Hy-Line do Brasil para sistemas internos, aplicativos, agenda e ferramentas de apoio operacional.",
+        "canonical": "/intranet.php",
+        "keywords": "intranet Hy-Line do Brasil, sistemas internos Hy-Line, aplicativos Hy-Line, Fluig Hy-Line, Farm App Hy-Line"
       }
     }
   },
@@ -948,7 +954,54 @@ const defaultContent = {
       "summary": "Uma leitura sobre como seleção genética, sanidade e acompanhamento técnico precisam conversar com as condições reais de produção no país.",
       "url": "#"
     }
-  ]
+  ],
+  "customCode": {
+    "head": "",
+    "bodyStart": "",
+    "bodyEnd": ""
+  },
+  "intranet": {
+    "title": "Intranet Hy-Line do Brasil",
+    "intro": "Acesso rápido aos ambientes internos, aplicativos e sistemas de apoio usados pela equipe Hy-Line do Brasil.",
+    "links": [
+      {
+        "title": "Aplicativo WEB - Desktop",
+        "category": "Sistema interno",
+        "description": "Acesso ao aplicativo web para uso em computadores e estações de trabalho.",
+        "url": "https://hyline.com.br/pt_BR/intranet/"
+      },
+      {
+        "title": "Aplicativos WEB - Mobile",
+        "category": "Sistema interno",
+        "description": "Acesso aos aplicativos web voltados para uso em celulares e tablets.",
+        "url": "https://hyline.com.br/pt_BR/intranet/"
+      },
+      {
+        "title": "Agenda - Projetores",
+        "category": "Operação interna",
+        "description": "Consulta e organização de agenda para uso de projetores e recursos internos.",
+        "url": "https://hyline.com.br/pt_BR/intranet/"
+      },
+      {
+        "title": "Fluig",
+        "category": "Sistema interno",
+        "description": "Acesso ao ambiente Fluig utilizado para processos e rotinas internas.",
+        "url": "https://hyline.com.br/pt_BR/intranet/"
+      },
+      {
+        "title": "Aplicativo de Granjas (Farm App)",
+        "category": "Operação interna",
+        "description": "Atalho para ferramentas internas relacionadas à rotina das granjas.",
+        "url": "https://hyline.com.br/pt_BR/intranet/"
+      },
+      {
+        "title": "Poultry Suíte",
+        "category": "Gestão técnica",
+        "description": "Acesso ao ambiente de apoio técnico e operacional da plataforma Poultry Suíte.",
+        "url": "https://hyline.com.br/pt_BR/intranet/"
+      }
+    ]
+  }
 };
 
 const pageMap = new Map([
@@ -960,6 +1013,7 @@ const pageMap = new Map([
   ["/pesquisa-desenvolvimento.php", "pesquisa"],
   ["/sobre-nos.php", "sobre"],
   ["/artigos.php", "artigos"],
+  ["/intranet.php", "intranet"],
   ["/recursos-tecnicos.php", "recursos"],
   ["/radar-mercado.php", "radar"],
   ["/contato.php", "contato"],
@@ -1047,6 +1101,7 @@ function renderPage(page, data, request) {
     pesquisa: renderResearch,
     sobre: renderAbout,
     artigos: renderArticles,
+    intranet: renderIntranet,
     recursos: renderTechnical,
     radar: renderRadar,
     contato: renderContact,
@@ -1058,18 +1113,25 @@ function renderPage(page, data, request) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   ${metaTags(data, page, request)}
+  ${customCode(data, "head")}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css?v=37">
 </head>
 <body>
+  ${customCode(data, "bodyStart")}
   ${header(data)}
   ${content}
   ${footer(data)}
   <script src="/assets/site.js?v=32"></script>
+  ${customCode(data, "bodyEnd")}
 </body>
 </html>`;
+}
+
+function customCode(data, slot) {
+  return String(data.customCode?.[slot] || "");
 }
 
 function metaTags(data, page, request) {
@@ -1111,7 +1173,7 @@ function header(data) {
     <a class="brand" href="/" aria-label="Hy-Line do Brasil"><img class="brand-logo" src="/${e(data.images?.logo || "assets/hyline-logo-brasil-new.png")}" alt="Hy-Line do Brasil"></a>
     <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
     <nav class="main-nav" aria-label="Menu principal">
-      <a href="/">Início</a><a href="/produtos.php">Produtos</a><a href="/sobre-nos.php">Sobre nós</a><a href="/pesquisa-desenvolvimento.php">P&D</a><a href="/bem-estar-animal.php">Bem-estar animal</a><a href="/representantes.php">Representantes</a><a href="/artigos.php">Artigos</a><a href="/contato.php">Contato</a><a class="nav-radar" href="/radar-mercado.php"><span class="radar-dot" aria-hidden="true"></span>Radar do Mercado</a><a class="nav-technical" href="/recursos-tecnicos.php">Recursos técnicos</a>
+      <a href="/">Início</a><a href="/produtos.php">Produtos</a><a href="/sobre-nos.php">Sobre nós</a><a href="/pesquisa-desenvolvimento.php">P&D</a><a href="/bem-estar-animal.php">Bem-estar animal</a><a href="/representantes.php">Representantes</a><a href="/artigos.php">Artigos</a><a href="/contato.php">Contato</a><a class="nav-radar" href="/radar-mercado.php"><span class="radar-dot" aria-hidden="true"></span>Radar do Mercado</a><a href="/intranet.php">Intranet</a><a class="nav-technical" href="/recursos-tecnicos.php">Recursos técnicos</a>
     </nav>
   </header>`;
 }
@@ -1244,6 +1306,40 @@ function articleCard(article) {
   </article>`;
 }
 
+function getIntranetLinks(data) {
+  return Array.isArray(data.intranet?.links) && data.intranet.links.length ? data.intranet.links : defaultContent.intranet?.links || [];
+}
+
+function renderIntranet(data) {
+  const intranet = data.intranet || defaultContent.intranet || {};
+  const links = getIntranetLinks(data);
+  return `<main class="content-page intranet-page">
+    <section class="page-hero intranet-page-hero">
+      <p class="eyebrow light">Intranet</p>
+      <h1>${e(intranet.title || "Acessos internos Hy-Line.")}</h1>
+      <p>${e(intranet.intro || "Atalhos para sistemas e ambientes internos da Hy-Line do Brasil.")}</p>
+    </section>
+    <section class="content-band intranet-band">
+      <div class="content-heading">
+        <p class="eyebrow">Acessos rápidos</p>
+        <h2>Links oficiais da Intranet.</h2>
+        <p>Área de direcionamento para plataformas internas, aplicativos e consultas operacionais.</p>
+      </div>
+      <div class="intranet-grid">${links.map(intranetCard).join("")}</div>
+    </section>
+  </main>`;
+}
+
+function intranetCard(item) {
+  const href = item.url || "https://hyline.com.br/pt_BR/intranet/";
+  return `<article class="intranet-card reveal">
+    <span>${e(item.category || "Intranet")}</span>
+    <h3>${e(item.title)}</h3>
+    <p>${e(item.description || "")}</p>
+    <a class="button primary" href="${e(href)}" target="_blank" rel="noopener">Acessar</a>
+  </article>`;
+}
+
 function renderTechnical(data) {
   const items = data.technical || [];
   const categories = ["Todos", ...new Set(items.map(i => i.category).filter(Boolean))];
@@ -1323,6 +1419,11 @@ async function adminSave(request, env, user) {
   const form = await request.formData();
   try {
     const data = JSON.parse(String(form.get("content_json") || ""));
+    data.customCode = {
+      head: String(form.get("custom_head") || ""),
+      bodyStart: String(form.get("custom_body_start") || ""),
+      bodyEnd: String(form.get("custom_body_end") || ""),
+    };
     await saveContent(env, data, user.username);
     return redirect("/admin?saved=1");
   } catch {
@@ -1335,7 +1436,7 @@ function loginPage(error = "") {
 }
 
 function adminPage(data, user, error = "") {
-  return `<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/assets/styles.css?v=37"><body class="admin-body"><header class="admin-header"><strong>Painel Hy-Line D1</strong><nav><a href="/">Ver site</a><a href="/admin/logout">Sair</a></nav></header><main class="admin-layout"><section class="admin-content"><div class="admin-page-title"><p class="eyebrow">Cloudflare Workers + D1</p><h1>Conteúdo principal</h1><p>Edite com cuidado. Este JSON alimenta todas as páginas renderizadas pelo Worker.</p><span class="storage-status is-db">Banco D1 ativo</span>${error ? `<div class="notice error">${e(error)}</div>` : ""}</div><form method="post" action="/admin/save" class="admin-card json-form"><textarea name="content_json" spellcheck="false">${e(JSON.stringify(data, null, 2))}</textarea><button class="button primary" type="submit">Salvar no D1</button></form></section></main></body></html>`;
+  return `<!doctype html><html lang="pt-BR"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="stylesheet" href="/assets/styles.css?v=37"><link rel="stylesheet" href="/assets/admin-panel.css"><body class="admin-body"><header class="admin-header"><strong>Painel Hy-Line D1</strong><nav><a href="/">Ver site</a><a href="/admin/logout">Sair</a></nav></header><main class="admin-layout"><section class="admin-content"><div class="admin-page-title"><p class="eyebrow">Cloudflare Workers + D1</p><h1>Conteúdo principal</h1><p>Edite com cuidado. Este JSON alimenta todas as páginas renderizadas pelo Worker.</p><span class="storage-status is-db">Banco D1 ativo</span>${error ? `<div class="notice error">${e(error)}</div>` : ""}</div><form method="post" action="/admin/save" class="admin-card json-form"><section class="custom-code-panel"><div><p class="eyebrow">Marketing e mensuração</p><h2>Códigos personalizados</h2><p>Use estes campos para Pixel, Google Analytics, Tag Manager, verificação de domínio e scripts externos. Cole apenas códigos de fontes confiáveis.</p></div><label>Códigos no HEAD<textarea name="custom_head" spellcheck="false" placeholder="Meta tags, Google Analytics, scripts que precisam ficar no head">${e(data.customCode?.head || "")}</textarea></label><label>Códigos no início do BODY<textarea name="custom_body_start" spellcheck="false" placeholder="Exemplo: noscript do Google Tag Manager">${e(data.customCode?.bodyStart || "")}</textarea></label><label>Códigos antes do fechamento do BODY<textarea name="custom_body_end" spellcheck="false" placeholder="Pixels, scripts de remarketing e integrações carregadas no final da página">${e(data.customCode?.bodyEnd || "")}</textarea></label></section><label class="json-main-label">JSON completo do site<textarea name="content_json" spellcheck="false">${e(JSON.stringify(data, null, 2))}</textarea></label><button class="button primary" type="submit">Salvar no D1</button></form></section></main></body></html>`;
 }
 
 async function currentUser(request, env) {
@@ -1379,7 +1480,7 @@ function contactResult(ok, message) {
 
 async function renderSitemap(request, env) {
   const origin = new URL(request.url).origin;
-  const paths = ["/", "/produtos.php", "/representantes.php", "/bem-estar-animal.php", "/pesquisa-desenvolvimento.php", "/sobre-nos.php", "/artigos.php", "/radar-mercado.php", "/recursos-tecnicos.php", "/contato.php"];
+  const paths = ["/", "/produtos.php", "/representantes.php", "/bem-estar-animal.php", "/pesquisa-desenvolvimento.php", "/sobre-nos.php", "/artigos.php", "/radar-mercado.php", "/intranet.php", "/recursos-tecnicos.php", "/contato.php"];
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map(p => `<url><loc>${origin}${p}</loc></url>`).join("")}</urlset>`;
 }
 

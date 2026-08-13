@@ -965,40 +965,49 @@ const defaultContent = {
     "intro": "Acesso rápido aos ambientes internos, aplicativos e sistemas de apoio usados pela equipe Hy-Line do Brasil.",
     "links": [
       {
+        "slug": "aplicativo-web-desktop",
         "title": "Aplicativo WEB - Desktop",
         "category": "Sistema interno",
         "description": "Acesso ao aplicativo web para uso em computadores e estações de trabalho.",
-        "url": "https://hyline.com.br/pt_BR/intranet/"
+        "url": "http://hlbapp.hyline.com.br/",
+        "externalUrl": "http://hlbapp.hyline.com.br/",
+        "accessText": "Acesso direto ao aplicativo web de desktop da Hy-Line do Brasil."
       },
       {
+        "slug": "aplicativos-web-mobile",
         "title": "Aplicativos WEB - Mobile",
         "category": "Sistema interno",
         "description": "Acesso aos aplicativos web voltados para uso em celulares e tablets.",
-        "url": "https://hyline.com.br/pt_BR/intranet/"
+        "url": "http://m.hlbapp.hyline.com.br/",
+        "externalUrl": "http://m.hlbapp.hyline.com.br/",
+        "accessText": "Acesso direto ao aplicativo web mobile da Hy-Line do Brasil."
       },
       {
-        "title": "Agenda - Projetores",
-        "category": "Operação interna",
-        "description": "Consulta e organização de agenda para uso de projetores e recursos internos.",
-        "url": "https://hyline.com.br/pt_BR/intranet/"
-      },
-      {
+        "slug": "fluig",
         "title": "Fluig",
         "category": "Sistema interno",
         "description": "Acesso ao ambiente Fluig utilizado para processos e rotinas internas.",
-        "url": "https://hyline.com.br/pt_BR/intranet/"
+        "url": "http://fluig.hyline.com.br:8080/portal/home",
+        "externalUrl": "http://fluig.hyline.com.br:8080/portal/home",
+        "accessText": "Direcionamento para o ambiente Fluig da Hy-Line, utilizado em fluxos, processos e rotinas administrativas internas."
       },
       {
+        "slug": "aplicativo-de-granjas",
         "title": "Aplicativo de Granjas (Farm App)",
         "category": "Operação interna",
         "description": "Atalho para ferramentas internas relacionadas à rotina das granjas.",
-        "url": "https://hyline.com.br/pt_BR/intranet/"
+        "url": "https://farm.poultry-suite.com/login",
+        "externalUrl": "https://farm.poultry-suite.com/login",
+        "accessText": "Acesso direto ao Farm App da Poultry Suite para apoio à rotina operacional das granjas."
       },
       {
+        "slug": "poultry-suite",
         "title": "Poultry Suíte",
         "category": "Gestão técnica",
         "description": "Acesso ao ambiente de apoio técnico e operacional da plataforma Poultry Suíte.",
-        "url": "https://hyline.com.br/pt_BR/intranet/"
+        "url": "https://login.poultry-suite.com/logon/LogonPoint/tmindex.html",
+        "externalUrl": "https://login.poultry-suite.com/logon/LogonPoint/tmindex.html",
+        "accessText": "Acesso direto ao login da Poultry Suíte para consultas e gestão de informações relacionadas à produção."
       }
     ]
   }
@@ -1093,6 +1102,8 @@ async function saveLead(request, env, apiResponse) {
 }
 
 function renderPage(page, data, request) {
+  const lang = selectedLanguage(request);
+  const localizedData = localizeContent(data, lang);
   const content = {
     home: renderHome,
     produtos: renderProducts,
@@ -1105,34 +1116,221 @@ function renderPage(page, data, request) {
     recursos: renderTechnical,
     radar: renderRadar,
     contato: renderContact,
-  }[page](data);
+  }[page](localizedData, request, lang);
 
-  return `<!doctype html>
-<html lang="pt-BR">
+  const pageHtml = `<!doctype html>
+<html lang="${lang === "en" ? "en" : lang === "es" ? "es" : "pt-BR"}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  ${metaTags(data, page, request)}
-  ${customCode(data, "head")}
+  ${metaTags(localizedData, page, request)}
+  ${customCode(localizedData, "head")}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/styles.css?v=37">
 </head>
-<body>
-  ${customCode(data, "bodyStart")}
-  ${header(data)}
+<body data-lang="${lang}">
+  ${customCode(localizedData, "bodyStart")}
+  ${header(localizedData, request, lang)}
   ${content}
-  ${footer(data)}
+  ${footer(localizedData, lang)}
   <script src="/assets/site.js?v=32"></script>
-  ${customCode(data, "bodyEnd")}
+  ${customCode(localizedData, "bodyEnd")}
 </body>
 </html>`;
+  return lang === "pt" ? pageHtml : translateMarkup(pageHtml, lang);
 }
 
 function customCode(data, slot) {
   return String(data.customCode?.[slot] || "");
 }
+
+function selectedLanguage(request) {
+  const value = new URL(request.url).searchParams.get("lang");
+  return value === "en" || value === "es" ? value : "pt";
+}
+
+function langUrl(request, lang) {
+  const url = new URL(request.url);
+  if (lang === "pt") url.searchParams.delete("lang");
+  else url.searchParams.set("lang", lang);
+  const query = url.searchParams.toString();
+  return `${url.pathname}${query ? `?${query}` : ""}`;
+}
+
+function localizeContent(data, lang) {
+  if (lang === "pt") return data;
+  return {
+    ...data,
+    site: {
+      ...data.site,
+      tagline: lang === "en"
+        ? "Layer genetics with structure, research and presence in Brazil."
+        : "Genética de postura con estructura, investigación y presencia en Brasil.",
+    },
+    seo: {
+      ...data.seo,
+      pages: Object.fromEntries(Object.entries(data.seo?.pages || {}).map(([key, value]) => [key, {
+        ...value,
+        title: tText(value.title, lang),
+        description: tText(value.description, lang),
+        keywords: tText(value.keywords, lang),
+      }])),
+    },
+  };
+}
+
+function translateMarkup(markup, lang) {
+  const dictionary = lang === "en" ? translationsEn : translationsEs;
+  const keys = Object.keys(dictionary).sort((a, b) => b.length - a.length);
+  return keys.reduce((html, key) => html.split(key).join(dictionary[key]), markup);
+}
+
+function tText(value, lang) {
+  return translateMarkup(String(value || ""), lang);
+}
+
+const translationsEn = {
+  "Hy-Line do Brasil": "Hy-Line Brazil",
+  "Genética de postura": "Layer genetics",
+  "Pesquisa aplicada": "Applied research",
+  "Atendimento técnico": "Technical support",
+  "Início": "Home",
+  "Produtos": "Products",
+  "Sobre nós": "About us",
+  "Bem-estar animal": "Animal welfare",
+  "Representantes": "Representatives",
+  "Artigos": "Articles",
+  "Contato": "Contact",
+  "Radar do Mercado": "Market Radar",
+  "Intranet": "Intranet",
+  "Recursos técnicos": "Technical resources",
+  "Linhagens Hy-Line": "Hy-Line lines",
+  "Linhagens Hy-Line para a postura brasileira.": "Hy-Line lines for Brazilian egg production.",
+  "Brown, W-36 e W-80 atendem diferentes objetivos de produção, com características técnicas voltadas à eficiência, qualidade de ovos e adaptação a sistemas comerciais.": "Brown, W-36 and W-80 serve different production goals, with technical traits focused on efficiency, egg quality and adaptation to commercial systems.",
+  "Nossas aves": "Our birds",
+  "Soluções genéticas para diferentes objetivos de produção.": "Genetic solutions for different production goals.",
+  "SAIBA MAIS": "LEARN MORE",
+  "Baixar guia de manejo": "Download management guide",
+  "Atendimento Hy-Line por estado.": "Hy-Line support by state.",
+  "Clique no estado desejado para consultar representantes e canais de atendimento por região.": "Click the desired state to view representatives and regional service channels.",
+  "Selecione um estado": "Select a state",
+  "Atendimento por região": "Regional support",
+  "As informações aparecerão aqui depois do clique em uma UF.": "The information will appear here after you click a state.",
+  "Estado selecionado": "Selected state",
+  "Voltar ao mapa": "Back to map",
+  "Equipe Hy-Line": "Hy-Line team",
+  "Contatos de apoio técnico e relacionamento.": "Technical and relationship support contacts.",
+  "Além do atendimento por estado, a Hy-Line do Brasil mantém uma equipe dedicada para orientar demandas técnicas, comerciais e institucionais.": "In addition to state-level support, Hy-Line Brazil has a dedicated team for technical, commercial and institutional requests.",
+  "Equipe técnica": "Technical team",
+  "Diretoria": "Management",
+  "Leituras técnicas e institucionais.": "Technical and institutional readings.",
+  "Conteúdos objetivos sobre genética, manejo, sanidade, mercado e temas que ajudam a contextualizar a avicultura de postura.": "Objective content on genetics, management, health, market and topics that help contextualize layer farming.",
+  "Publicações": "Publications",
+  "Artigos para consulta.": "Articles for reference.",
+  "Ler artigo": "Read article",
+  "Acessos internos Hy-Line.": "Hy-Line internal access.",
+  "Acessos rápidos": "Quick access",
+  "Links oficiais da Intranet.": "Official Intranet links.",
+  "Área de direcionamento para plataformas internas, aplicativos e consultas operacionais.": "A hub for internal platforms, applications and operational queries.",
+  "Acessar": "Access",
+  "Materiais técnicos para consulta.": "Technical materials for reference.",
+  "Guias de manejo, referências de ambiência e materiais de apoio para diferentes fases de criação e produção.": "Management guides, environment references and support materials for different rearing and production stages.",
+  "Biblioteca técnica": "Technical library",
+  "Materiais disponíveis": "Available materials",
+  "Buscar por manejo, ambiência ou qualidade": "Search by management, environment or quality",
+  "Categorias de materiais técnicos": "Technical material categories",
+  "Todos": "All",
+  "Abrir material": "Open material",
+  "Suporte técnico": "Technical support",
+  "Conteúdo organizado para apoiar a rotina de manejo.": "Organized content to support management routines.",
+  "Indicadores para acompanhar o mercado de ovos.": "Indicators to follow the egg market.",
+  "Uma área de consulta rápida para acompanhar referências de preços, câmbio e movimentos relevantes da cadeia de postura comercial.": "A quick reference area to follow price benchmarks, exchange rates and relevant movements in the commercial layer chain.",
+  "Leitura de mercado": "Market reading",
+  "Informação objetiva para decisões mais bem contextualizadas.": "Objective information for better contextualized decisions.",
+  "Fale com a Hy-Line do Brasil.": "Contact Hy-Line Brazil.",
+  "Envie sua mensagem para atendimento institucional, técnico ou regional. A equipe direciona o contato pelo canal informado.": "Send your message for institutional, technical or regional support. The team will route the contact through the channel provided.",
+  "Canais": "Channels",
+  "Atendimento direto e regional.": "Direct and regional support.",
+  "Nome": "Name",
+  "Telefone": "Phone",
+  "Assunto": "Subject",
+  "Mensagem": "Message",
+  "Enviar informações": "Send information",
+  "Ver representantes": "View representatives",
+  "Painel": "Admin panel",
+};
+
+const translationsEs = {
+  "Hy-Line do Brasil": "Hy-Line Brasil",
+  "Genética de postura": "Genética de postura",
+  "Pesquisa aplicada": "Investigación aplicada",
+  "Atendimento técnico": "Atención técnica",
+  "Início": "Inicio",
+  "Produtos": "Productos",
+  "Sobre nós": "Sobre nosotros",
+  "Bem-estar animal": "Bienestar animal",
+  "Representantes": "Representantes",
+  "Artigos": "Artículos",
+  "Contato": "Contacto",
+  "Radar do Mercado": "Radar del Mercado",
+  "Recursos técnicos": "Recursos técnicos",
+  "Linhagens Hy-Line": "Líneas Hy-Line",
+  "Linhagens Hy-Line para a postura brasileira.": "Líneas Hy-Line para la postura brasileña.",
+  "Brown, W-36 e W-80 atendem diferentes objetivos de produção, com características técnicas voltadas à eficiência, qualidade de ovos e adaptação a sistemas comerciais.": "Brown, W-36 y W-80 atienden diferentes objetivos de producción, con características técnicas orientadas a eficiencia, calidad de huevo y adaptación a sistemas comerciales.",
+  "Nossas aves": "Nuestras aves",
+  "Soluções genéticas para diferentes objetivos de produção.": "Soluciones genéticas para diferentes objetivos de producción.",
+  "SAIBA MAIS": "CONOZCA MÁS",
+  "Baixar guia de manejo": "Descargar guía de manejo",
+  "Atendimento Hy-Line por estado.": "Atención Hy-Line por estado.",
+  "Clique no estado desejado para consultar representantes e canais de atendimento por região.": "Haga clic en el estado deseado para consultar representantes y canales de atención por región.",
+  "Selecione um estado": "Seleccione un estado",
+  "Atendimento por região": "Atención por región",
+  "As informações aparecerão aqui depois do clique em uma UF.": "La información aparecerá aquí después de hacer clic en un estado.",
+  "Estado selecionado": "Estado seleccionado",
+  "Voltar ao mapa": "Volver al mapa",
+  "Equipe Hy-Line": "Equipo Hy-Line",
+  "Contatos de apoio técnico e relacionamento.": "Contactos de apoyo técnico y relacionamiento.",
+  "Além do atendimento por estado, a Hy-Line do Brasil mantém uma equipe dedicada para orientar demandas técnicas, comerciais e institucionais.": "Además de la atención por estado, Hy-Line Brasil mantiene un equipo dedicado para orientar demandas técnicas, comerciales e institucionales.",
+  "Equipe técnica": "Equipo técnico",
+  "Diretoria": "Dirección",
+  "Leituras técnicas e institucionais.": "Lecturas técnicas e institucionales.",
+  "Conteúdos objetivos sobre genética, manejo, sanidade, mercado e temas que ajudam a contextualizar a avicultura de postura.": "Contenidos objetivos sobre genética, manejo, sanidad, mercado y temas que ayudan a contextualizar la avicultura de postura.",
+  "Publicações": "Publicaciones",
+  "Artigos para consulta.": "Artículos para consulta.",
+  "Ler artigo": "Leer artículo",
+  "Acessos internos Hy-Line.": "Accesos internos Hy-Line.",
+  "Acessos rápidos": "Accesos rápidos",
+  "Links oficiais da Intranet.": "Enlaces oficiales de Intranet.",
+  "Área de direcionamento para plataformas internas, aplicativos e consultas operacionais.": "Área de acceso a plataformas internas, aplicaciones y consultas operativas.",
+  "Acessar": "Acceder",
+  "Materiais técnicos para consulta.": "Materiales técnicos para consulta.",
+  "Guias de manejo, referências de ambiência e materiais de apoio para diferentes fases de criação e produção.": "Guías de manejo, referencias de ambiente y materiales de apoyo para diferentes fases de crianza y producción.",
+  "Biblioteca técnica": "Biblioteca técnica",
+  "Materiais disponíveis": "Materiales disponibles",
+  "Buscar por manejo, ambiência ou qualidade": "Buscar por manejo, ambiente o calidad",
+  "Categorias de materiais técnicos": "Categorías de materiales técnicos",
+  "Todos": "Todos",
+  "Abrir material": "Abrir material",
+  "Suporte técnico": "Soporte técnico",
+  "Conteúdo organizado para apoiar a rotina de manejo.": "Contenido organizado para apoyar la rutina de manejo.",
+  "Indicadores para acompanhar o mercado de ovos.": "Indicadores para acompañar el mercado de huevos.",
+  "Uma área de consulta rápida para acompanhar referências de preços, câmbio e movimentos relevantes da cadeia de postura comercial.": "Un área de consulta rápida para acompañar referencias de precios, cambio y movimientos relevantes de la cadena de postura comercial.",
+  "Leitura de mercado": "Lectura de mercado",
+  "Informação objetiva para decisões mais bem contextualizadas.": "Información objetiva para decisiones mejor contextualizadas.",
+  "Fale com a Hy-Line do Brasil.": "Hable con Hy-Line Brasil.",
+  "Envie sua mensagem para atendimento institucional, técnico ou regional. A equipe direciona o contato pelo canal informado.": "Envíe su mensaje para atención institucional, técnica o regional. El equipo dirigirá el contacto por el canal informado.",
+  "Canais": "Canales",
+  "Atendimento direto e regional.": "Atención directa y regional.",
+  "Nome": "Nombre",
+  "Telefone": "Teléfono",
+  "Assunto": "Asunto",
+  "Mensagem": "Mensaje",
+  "Enviar informações": "Enviar información",
+  "Ver representantes": "Ver representantes",
+  "Painel": "Panel",
+};
 
 function metaTags(data, page, request) {
   const seo = data.seo || {};
@@ -1167,8 +1365,8 @@ function metaTags(data, page, request) {
   <script type="application/ld+json">${JSON.stringify(organization)}</script>`;
 }
 
-function header(data) {
-  return `<div class="utility-bar"><span>Hy-Line do Brasil</span><div><b>Genética de postura</b><b>Pesquisa aplicada</b><b>Atendimento técnico</b></div><div class="utility-actions">${social(data)}${languageSwitch()}</div></div>
+function header(data, request, lang = "pt") {
+  return `<div class="utility-bar"><span>Hy-Line do Brasil</span><div><b>Genética de postura</b><b>Pesquisa aplicada</b><b>Atendimento técnico</b></div><div class="utility-actions">${social(data)}${languageSwitch(request, lang)}</div></div>
   <header class="site-header">
     <a class="brand" href="/" aria-label="Hy-Line do Brasil"><img class="brand-logo" src="/${e(data.images?.logo || "assets/hyline-logo-brasil-new.png")}" alt="Hy-Line do Brasil"></a>
     <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
@@ -1185,11 +1383,11 @@ function social(data) {
   </span>`;
 }
 
-function languageSwitch() {
+function languageSwitch(request, lang = "pt") {
   return `<span class="language-switch" aria-label="Selecionar idioma">
-    <a class="is-active" href="/"><span class="flag flag-br" aria-hidden="true"></span><span>PT</span></a>
-    <a href="/?lang=en"><span class="flag flag-us" aria-hidden="true"></span><span>ENG</span></a>
-    <a href="/?lang=es"><span class="flag flag-es" aria-hidden="true"></span><span>ESP</span></a>
+    <a class="${lang === "pt" ? "is-active" : ""}" href="${e(langUrl(request, "pt"))}"><span class="flag flag-br" aria-hidden="true"></span><span>PT</span></a>
+    <a class="${lang === "en" ? "is-active" : ""}" href="${e(langUrl(request, "en"))}"><span class="flag flag-us" aria-hidden="true"></span><span>ENG</span></a>
+    <a class="${lang === "es" ? "is-active" : ""}" href="${e(langUrl(request, "es"))}"><span class="flag flag-es" aria-hidden="true"></span><span>ESP</span></a>
   </span>`;
 }
 
@@ -1259,7 +1457,18 @@ function renderRepresentatives(data) {
 
 function supportContacts(data) {
   const groups = [["Equipe técnica", data.representatives?.technicalTeam || []], ["Diretoria", data.representatives?.directors || []]];
-  return `<section class="representatives-support"><div class="content-heading"><p class="eyebrow">Equipe Hy-Line</p><h2>Contatos de apoio técnico e relacionamento.</h2><p>Além do atendimento por estado, a Hy-Line do Brasil mantém uma equipe dedicada para orientar demandas técnicas, comerciais e institucionais.</p></div>${groups.map(([title, people]) => people.length ? `<div class="support-contact-block"><h3>${e(title)}</h3><div class="support-contact-grid">${people.map(p => `<article class="support-contact-card"><img src="/${e(p.photo || "assets/rep-placeholder.svg")}" alt="Foto de ${e(p.name)}"><div><strong>${e(p.name)}</strong><span>${e(p.role)}</span>${p.phone ? `<a href="tel:${e(String(p.phone).replace(/\D+/g, ""))}">${e(p.phone)}</a>` : ""}${p.email ? `<a href="mailto:${e(p.email)}">${e(p.email)}</a>` : ""}</div></article>`).join("")}</div></div>` : "").join("")}</section>`;
+  return `<section class="representatives-support"><div class="content-heading"><p class="eyebrow">Equipe Hy-Line</p><h2>Contatos de apoio técnico e relacionamento.</h2><p>Além do atendimento por estado, a Hy-Line do Brasil mantém uma equipe dedicada para orientar demandas técnicas, comerciais e institucionais.</p></div>${groups.map(([title, people]) => people.length ? `<div class="support-contact-block"><h3>${e(title)}</h3><div class="support-contact-grid">${people.map(p => `<article class="support-contact-card"><img src="/${e(p.photo || "assets/rep-placeholder.svg")}" alt="Foto de ${e(p.name)}"><div><strong>${e(p.name)}</strong><span>${e(p.role)}</span>${whatsappContactLink(p.phone)}${p.email ? `<a href="mailto:${e(p.email)}">${e(p.email)}</a>` : ""}</div></article>`).join("")}</div></div>` : "").join("")}</section>`;
+}
+
+function whatsappUrl(phone) {
+  const digits = String(phone || "").replace(/\D+/g, "");
+  if (!digits) return "";
+  return `https://wa.me/${digits.length <= 11 ? `55${digits}` : digits}`;
+}
+
+function whatsappContactLink(phone) {
+  const url = whatsappUrl(phone);
+  return url ? `<a class="whatsapp-phone" href="${e(url)}" target="_blank" rel="noopener" aria-label="Abrir WhatsApp para ${e(phone)}"><span class="whatsapp-mini" aria-hidden="true"></span>${e(phone)}</a>` : "";
 }
 
 function renderWelfare(data) {
@@ -1310,9 +1519,12 @@ function getIntranetLinks(data) {
   return Array.isArray(data.intranet?.links) && data.intranet.links.length ? data.intranet.links : defaultContent.intranet?.links || [];
 }
 
-function renderIntranet(data) {
+function renderIntranet(data, request) {
   const intranet = data.intranet || defaultContent.intranet || {};
   const links = getIntranetLinks(data);
+  const currentSlug = new URL(request.url).searchParams.get("acesso");
+  const currentItem = links.find((item) => item.slug === currentSlug);
+  if (currentItem) return renderIntranetAccess(intranet, currentItem);
   return `<main class="content-page intranet-page">
     <section class="page-hero intranet-page-hero">
       <p class="eyebrow light">Intranet</p>
@@ -1331,13 +1543,39 @@ function renderIntranet(data) {
 }
 
 function intranetCard(item) {
-  const href = item.url || "https://hyline.com.br/pt_BR/intranet/";
+  const href = item.url || `/intranet.php?acesso=${encodeURIComponent(item.slug || slugify(item.title))}`;
+  const external = /^https?:\/\//.test(href);
   return `<article class="intranet-card reveal">
     <span>${e(item.category || "Intranet")}</span>
     <h3>${e(item.title)}</h3>
     <p>${e(item.description || "")}</p>
-    <a class="button primary" href="${e(href)}" target="_blank" rel="noopener">Acessar</a>
+    <a class="button primary" href="${e(href)}" ${external ? 'target="_blank" rel="noopener"' : ""}>Acessar</a>
   </article>`;
+}
+
+function renderIntranetAccess(intranet, item) {
+  return `<main class="content-page intranet-page">
+    <section class="page-hero intranet-page-hero">
+      <p class="eyebrow light">Intranet</p>
+      <h1>${e(item.title)}</h1>
+      <p>${e(item.description || intranet.intro || "")}</p>
+    </section>
+    <section class="content-band intranet-access-band">
+      <div class="intranet-access-card">
+        <span>${e(item.category || "Sistema interno")}</span>
+        <h2>Acesso interno Hy-Line</h2>
+        <p>${e(item.accessText || "Este atalho foi organizado para direcionar usuários autorizados aos ambientes internos da Hy-Line do Brasil.")}</p>
+        <div class="intranet-access-actions">
+          ${item.externalUrl ? `<a class="button primary" href="${e(item.externalUrl)}" target="_blank" rel="noopener">Abrir sistema</a>` : `<a class="button primary" href="https://hyline.com.br/pt_BR/intranet/" target="_blank" rel="noopener">Abrir Intranet oficial</a>`}
+          <a class="text-link" href="/intranet.php">Voltar para Intranet</a>
+        </div>
+      </div>
+    </section>
+  </main>`;
+}
+
+function slugify(value) {
+  return String(value || "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 }
 
 function renderTechnical(data) {

@@ -591,3 +591,16 @@ body{padding-top:0!important}
 .support-contact-card{min-height:104px}
 @media(max-width:1180px){.support-contact-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.representatives-support{padding-top:44px;padding-bottom:52px}.support-contact-grid{grid-template-columns:1fr}}
+
+/* V43: página de Intranet com links oficiais. */
+.intranet-page-hero{background:linear-gradient(120deg,#002d51 0 54%,#075b91 54%)}
+.intranet-band .content-heading p:not(.eyebrow){max-width:620px;color:#4f6674;line-height:1.75}
+.intranet-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.intranet-card{display:flex;min-height:260px;flex-direction:column;align-items:flex-start;padding:26px;background:#fff;border:1px solid var(--line);border-top:6px solid var(--yellow);border-radius:8px;box-shadow:0 16px 36px rgba(13,41,64,.08)}
+.intranet-card:nth-child(even){border-top-color:#2f7d4a}
+.intranet-card span{color:#b48600;font-size:10px;font-weight:800;text-transform:uppercase}
+.intranet-card h3{margin:14px 0 10px;color:var(--blue);font-size:24px;line-height:1.1}
+.intranet-card p{margin:0 0 22px;color:#4f6674;font-size:13px;line-height:1.65}
+.intranet-card .button{margin-top:auto}
+@media(max-width:1050px){.intranet-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:760px){.intranet-grid{grid-template-columns:1fr}.intranet-card{min-height:auto}.intranet-page-hero{background:linear-gradient(135deg,#002d51,#003f70)}}

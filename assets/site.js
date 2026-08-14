@@ -119,7 +119,7 @@ const whatsappHref = (phone) => {
 const whatsappPhoneLink = (phone) => {
   const href = whatsappHref(phone);
   if (!href) return "";
-  return `<a class="whatsapp-phone" href="${escapeHtml(href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(uiText.openWhatsapp)} ${escapeHtml(phone)}"><span class="whatsapp-mini" aria-hidden="true"></span>${escapeHtml(phone)}</a>`;
+  return `<a class="whatsapp-phone" href="${escapeHtml(href)}" target="_blank" rel="noopener" aria-label="${escapeHtml(uiText.openWhatsapp)} ${escapeHtml(phone)}"><img class="whatsapp-mini" src="/assets/whatsapp-icon.png" alt="" aria-hidden="true">${escapeHtml(phone)}</a>`;
 };
 
 const resetStateSelection = () => {

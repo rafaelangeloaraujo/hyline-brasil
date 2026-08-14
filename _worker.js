@@ -276,6 +276,13 @@ const defaultContent = {
             "phone": "81 99997-2510",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
           }
         ]
       },
@@ -308,6 +315,13 @@ const defaultContent = {
             "phone": "81 99852-1990",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
           }
         ]
       },
@@ -324,6 +338,13 @@ const defaultContent = {
             "phone": "79 99630-2727",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
           }
         ]
       },
@@ -338,6 +359,13 @@ const defaultContent = {
             "name": "Almir Farias",
             "role": "Representante regional",
             "phone": "81 99997-2510",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
           }
@@ -418,6 +446,13 @@ const defaultContent = {
             "phone": "81 99997-2510",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
           }
         ]
       },
@@ -489,6 +524,13 @@ const defaultContent = {
             "phone": "85 98190-2157",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
           }
         ]
       },
@@ -503,6 +545,13 @@ const defaultContent = {
             "name": "Almir Farias",
             "role": "Representante regional",
             "phone": "81 99997-2510",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
           }
@@ -537,6 +586,13 @@ const defaultContent = {
             "phone": "81 99997-2510",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
           }
         ]
       },
@@ -551,6 +607,13 @@ const defaultContent = {
             "name": "Almir Farias",
             "role": "Representante regional",
             "phone": "81 99997-2510",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
           }
@@ -585,6 +648,13 @@ const defaultContent = {
             "phone": "81 99997-2510",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
           }
         ]
       },
@@ -617,6 +687,13 @@ const defaultContent = {
             "phone": "81 99852-1990",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
           }
         ]
       },
@@ -631,6 +708,13 @@ const defaultContent = {
             "name": "Antônio Rocha",
             "role": "Representante regional",
             "phone": "81 99852-1990",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
           }
@@ -707,6 +791,13 @@ const defaultContent = {
             "name": "Brasmed",
             "role": "Representante regional",
             "phone": "79 99630-2727",
+            "email": "",
+            "photo": "assets/rep-placeholder.svg"
+          },
+          {
+            "name": "Luiz Henrique Ferreira",
+            "role": "Consultor de Serviços Técnicos e Comerciais da Hy-Line",
+            "phone": "(17) 99668-3768",
             "email": "",
             "photo": "assets/rep-placeholder.svg"
           }
@@ -1139,7 +1230,7 @@ function renderPage(page, data, request) {
   ${customCode(localizedData, "bodyEnd")}
 </body>
 </html>`;
-  return lang === "pt" ? pageHtml : translateMarkup(pageHtml, lang);
+  return lang === "pt" ? pageHtml : preserveLanguageLinks(translateMarkup(pageHtml, lang), lang);
 }
 
 function customCode(data, slot) {
@@ -1161,17 +1252,19 @@ function langUrl(request, lang) {
 
 function localizeContent(data, lang) {
   if (lang === "pt") return data;
+  const translated = JSON.parse(JSON.stringify(data));
+  translateObjectStrings(translated, lang);
   return {
-    ...data,
+    ...translated,
     site: {
-      ...data.site,
+      ...translated.site,
       tagline: lang === "en"
         ? "Layer genetics with structure, research and presence in Brazil."
         : "Genética de postura con estructura, investigación y presencia en Brasil.",
     },
     seo: {
-      ...data.seo,
-      pages: Object.fromEntries(Object.entries(data.seo?.pages || {}).map(([key, value]) => [key, {
+      ...translated.seo,
+      pages: Object.fromEntries(Object.entries(translated.seo?.pages || {}).map(([key, value]) => [key, {
         ...value,
         title: tText(value.title, lang),
         description: tText(value.description, lang),
@@ -1179,6 +1272,25 @@ function localizeContent(data, lang) {
       }])),
     },
   };
+}
+
+function translateObjectStrings(value, lang) {
+  if (!value || typeof value !== "object") return value;
+  if (Array.isArray(value)) {
+    value.forEach((item) => translateObjectStrings(item, lang));
+    return value;
+  }
+  Object.keys(value).forEach((key) => {
+    if (typeof value[key] === "string" && shouldTranslateField(key, value[key])) value[key] = tText(value[key], lang);
+    else translateObjectStrings(value[key], lang);
+  });
+  return value;
+}
+
+function shouldTranslateField(key, value) {
+  if (/url|href|file|src|slug|email|phone|logo|image|icon|external/i.test(key)) return false;
+  if (/^https?:\/\//.test(value) || value.includes("/assets/") || value.includes(".php")) return false;
+  return true;
 }
 
 function translateMarkup(markup, lang) {
@@ -1189,6 +1301,16 @@ function translateMarkup(markup, lang) {
 
 function tText(value, lang) {
   return translateMarkup(String(value || ""), lang);
+}
+
+function preserveLanguageLinks(markup, lang) {
+  return markup.replace(/href="(\/(?!\/|assets\/|admin|api\/|send-contact\.php|sitemap\.xml|robots\.txt)[^"#?]*)"/g, (match, path) => {
+    if (!path || path.startsWith("/assets/")) return match;
+    return `href="${path}?lang=${lang}"`;
+  }).replace(/href="(\/[^"#?]*\?[^"]*)"/g, (match, url) => {
+    if (url.includes("lang=") || url.startsWith("/admin") || url.startsWith("/api/")) return match;
+    return `href="${url}&lang=${lang}"`;
+  });
 }
 
 const translationsEn = {
@@ -1263,6 +1385,21 @@ const translationsEn = {
 };
 
 const translationsEs = {
+  "Genética de postura com pesquisa, sanidade e adaptação ao Brasil": "Genética de postura con investigación, sanidad y adaptación a Brasil",
+  "A Hy-Line do Brasil integra seleção genética, biossegurança, produção local e acompanhamento técnico para atender a avicultura de postura em diferentes realidades de manejo no país.": "Hy-Line Brasil integra selección genética, bioseguridad, producción local y acompañamiento técnico para atender la avicultura de postura en diferentes realidades de manejo en el país.",
+  "Conheça as linhagens": "Conozca las líneas",
+  "Ver estrutura Hy-Line": "Ver estructura Hy-Line",
+  "anos de operação contínua no Brasil": "años de operación continua en Brasil",
+  "pintainhas por ano em capacidade produtiva": "pollitas por año en capacidad productiva",
+  "linhagens Hy-Line adaptadas a diferentes sistemas": "líneas Hy-Line adaptadas a diferentes sistemas",
+  "regiões brasileiras com atendimento e proximidade técnica": "regiones brasileñas con atención y proximidad técnica",
+  "Estrutura brasileira conectada à pesquisa global": "Estructura brasileña conectada a la investigación global",
+  "Desde 1999, a Hy-Line do Brasil atua com estrutura própria, equipe técnica e processos voltados à avicultura de postura. A empresa conecta a pesquisa da Hy-Line International às condições brasileiras de clima, manejo e mercado, com granjas, incubatórios, controle sanitário e capacidade instalada de 24 milhões de pintainhas por ano.": "Desde 1999, Hy-Line Brasil actúa con estructura propia, equipo técnico y procesos orientados a la avicultura de postura. La empresa conecta la investigación de Hy-Line International con las condiciones brasileñas de clima, manejo y mercado, con granjas, incubadoras, control sanitario y capacidad instalada de 24 millones de pollitas por año.",
+  "Conheça P&D": "Conozca I+D",
+  "Pesquisa e desenvolvimento conectados ao campo": "Investigación y desarrollo conectados al campo",
+  "O trabalho de pesquisa da Hy-Line no Brasil aproxima genética, sanidade, manejo e leitura técnica de campo. A seleção considera eficiência alimentar, viabilidade, qualidade de ovos, adaptação ao clima e biossegurança, sempre com foco em orientações aplicáveis à realidade nacional.": "El trabajo de investigación de Hy-Line en Brasil aproxima genética, sanidad, manejo y lectura técnica de campo. La selección considera eficiencia alimentaria, viabilidad, calidad de huevos, adaptación al clima y bioseguridad, siempre con foco en orientaciones aplicables a la realidad nacional.",
+  "Bem-estar animal em todas as etapas": "Bienestar animal en todas las etapas",
+  "O bem-estar animal faz parte da rotina de produção e manejo da Hy-Line do Brasil. Cuidado diário, acompanhamento veterinário, ambiência, água e alimentação de qualidade contribuem para saúde, uniformidade e desenvolvimento adequado das aves.": "El bienestar animal forma parte de la rutina de producción y manejo de Hy-Line Brasil. El cuidado diario, el acompañamiento veterinario, el ambiente, el agua y la alimentación de calidad contribuyen a la salud, uniformidad y desarrollo adecuado de las aves.",
   "Hy-Line do Brasil": "Hy-Line Brasil",
   "Genética de postura": "Genética de postura",
   "Pesquisa aplicada": "Investigación aplicada",
@@ -1468,7 +1605,7 @@ function whatsappUrl(phone) {
 
 function whatsappContactLink(phone) {
   const url = whatsappUrl(phone);
-  return url ? `<a class="whatsapp-phone" href="${e(url)}" target="_blank" rel="noopener" aria-label="Abrir WhatsApp para ${e(phone)}"><span class="whatsapp-mini" aria-hidden="true"></span>${e(phone)}</a>` : "";
+  return url ? `<a class="whatsapp-phone" href="${e(url)}" target="_blank" rel="noopener" aria-label="Abrir WhatsApp para ${e(phone)}"><img class="whatsapp-mini" src="/assets/whatsapp-icon.png" alt="" aria-hidden="true">${e(phone)}</a>` : "";
 }
 
 function renderWelfare(data) {

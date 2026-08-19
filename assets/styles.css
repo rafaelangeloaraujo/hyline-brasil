@@ -627,3 +627,20 @@ body{padding-top:0!important}
 .intranet-access-actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:24px}
 @media(max-width:1050px){.story.section{grid-template-columns:1fr;justify-items:center}.story.section .story-copy,.story-video-wrap,.story-visual{max-width:720px}.proof-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.proof-strip{grid-template-columns:1fr}.proof-strip article{justify-content:flex-start}.proof-strip article strong{min-width:70px}.intranet-access-card{padding:28px 22px}.intranet-access-actions .button{width:100%}}
+
+/* V46: faixa de pesquisa mais institucional e viva. */
+.research-band{grid-template-columns:minmax(320px,500px) minmax(160px,260px) minmax(420px,1fr);gap:clamp(28px,5vw,70px);align-items:center;padding:94px max(28px,6vw);background:radial-gradient(circle at 82% 18%,rgba(255,213,0,.16),transparent 30%),linear-gradient(115deg,#002d51 0 48%,#004f83 48% 100%);border-top:0;border-bottom:10px solid var(--yellow)}
+.research-band::before{position:absolute;left:0;top:0;width:38%;height:100%;background:linear-gradient(135deg,rgba(255,255,255,.08),transparent 58%);clip-path:polygon(0 0,82% 0,100% 100%,0 100%);content:"";pointer-events:none}
+.research-band::after{right:0;top:0;width:9px;height:100%;background:#2f7d4a;transform:none}
+.research-band>div:first-child{position:relative;z-index:1;padding:30px 0 30px 24px;border-left:5px solid var(--yellow)}
+.research-band h2{max-width:520px;font-size:clamp(38px,4.6vw,64px);line-height:1.04}
+.research-band>div:first-child p:not(.eyebrow){max-width:430px;color:#dbeaf2;font-size:15px;line-height:1.65}
+.research-number{position:relative;z-index:1;display:grid;width:190px;height:190px;place-items:center;color:var(--blue-deep);background:var(--yellow);border:10px solid rgba(255,255,255,.88);border-radius:50%;font-size:clamp(70px,8vw,112px);box-shadow:0 24px 70px rgba(0,0,0,.24)}
+.research-number::after{position:absolute;inset:-22px;border:1px dashed rgba(255,213,0,.65);border-radius:50%;content:"";animation:research-spin 18s linear infinite}
+.research-points{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.research-points span{position:relative;min-height:128px;padding:58px 22px 20px;color:#fff;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-left:5px solid var(--yellow);border-radius:8px;box-shadow:0 18px 42px rgba(0,31,56,.18);font-size:13px;line-height:1.35}
+.research-points span::before{position:absolute;left:20px;top:18px;display:grid;width:28px;height:28px;place-items:center;color:var(--blue-deep);background:var(--yellow);border-radius:50%;font-size:14px;font-weight:900;content:"+"}
+.research-points span:hover{color:#fff;background:rgba(255,255,255,.14);transform:translateY(-4px)}
+@keyframes research-spin{to{transform:rotate(360deg)}}
+@media(max-width:1050px){.research-band{grid-template-columns:1fr;gap:28px}.research-number{width:150px;height:150px;font-size:82px}.research-points{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:640px){.research-band{padding:68px 20px}.research-band>div:first-child{padding-left:18px}.research-points{grid-template-columns:1fr}.research-points span{min-height:auto}.research-number{width:128px;height:128px;font-size:66px}}

@@ -1304,12 +1304,12 @@ function tText(value, lang) {
 }
 
 function preserveLanguageLinks(markup, lang) {
-  return markup.replace(/href="(\/(?!\/|assets\/|admin|api\/|send-contact\.php|sitemap\.xml|robots\.txt)[^"#?]*)"/g, (match, path) => {
-    if (!path || path.startsWith("/assets/")) return match;
-    return `href="${path}?lang=${lang}"`;
-  }).replace(/href="(\/[^"#?]*\?[^"]*)"/g, (match, url) => {
-    if (url.includes("lang=") || url.startsWith("/admin") || url.startsWith("/api/")) return match;
-    return `href="${url}&lang=${lang}"`;
+  return markup.replace(/<a\b([^>]*?)href="(\/(?!\/|assets\/|admin|api\/|send-contact\.php|sitemap\.xml|robots\.txt)[^"#?]*)"([^>]*)>/g, (match, before, path, _pathAgain, after) => {
+    if (`${before}${after}`.includes("data-language-option")) return match;
+    return `<a${before}href="${path}?lang=${lang}"${after}>`;
+  }).replace(/<a\b([^>]*?)href="(\/[^"#?]*\?[^"]*)"([^>]*)>/g, (match, before, url, after) => {
+    if (`${before}${after}`.includes("data-language-option") || url.includes("lang=") || url.startsWith("/admin") || url.startsWith("/api/")) return match;
+    return `<a${before}href="${url}&lang=${lang}"${after}>`;
   });
 }
 
@@ -1522,9 +1522,9 @@ function social(data) {
 
 function languageSwitch(request, lang = "pt") {
   return `<span class="language-switch" aria-label="Selecionar idioma">
-    <a class="${lang === "pt" ? "is-active" : ""}" href="${e(langUrl(request, "pt"))}"><span class="flag flag-br" aria-hidden="true"></span><span>PT</span></a>
-    <a class="${lang === "en" ? "is-active" : ""}" href="${e(langUrl(request, "en"))}"><span class="flag flag-us" aria-hidden="true"></span><span>ENG</span></a>
-    <a class="${lang === "es" ? "is-active" : ""}" href="${e(langUrl(request, "es"))}"><span class="flag flag-es" aria-hidden="true"></span><span>ESP</span></a>
+    <a data-language-option class="${lang === "pt" ? "is-active" : ""}" href="${e(langUrl(request, "pt"))}"><span class="flag flag-br" aria-hidden="true"></span><span>PT</span></a>
+    <a data-language-option class="${lang === "en" ? "is-active" : ""}" href="${e(langUrl(request, "en"))}"><span class="flag flag-us" aria-hidden="true"></span><span>ENG</span></a>
+    <a data-language-option class="${lang === "es" ? "is-active" : ""}" href="${e(langUrl(request, "es"))}"><span class="flag flag-es" aria-hidden="true"></span><span>ESP</span></a>
   </span>`;
 }
 

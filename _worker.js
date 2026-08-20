@@ -1215,6 +1215,7 @@ function renderPage(page, data, request) {
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   ${metaTags(localizedData, page, request)}
+  ${googleAnalyticsTag(localizedData)}
   ${customCode(localizedData, "head")}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1235,6 +1236,20 @@ function renderPage(page, data, request) {
 
 function customCode(data, slot) {
   return String(data.customCode?.[slot] || "");
+}
+
+function googleAnalyticsTag(data) {
+  const existingHead = String(data.customCode?.head || "");
+  if (existingHead.includes("G-0TRYTW12K1")) return "";
+  return `<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-0TRYTW12K1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-0TRYTW12K1');
+</script>`;
 }
 
 function selectedLanguage(request) {

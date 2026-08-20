@@ -1,0 +1,56 @@
+-- Corrige acentuacao quebrada no conteudo ja salvo no D1.
+-- Preserva o JSON atual e apenas substitui sequencias de mojibake comuns.
+
+UPDATE site_content SET content_json = replace(content_json, 'Ã¡', 'á') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã ', 'à') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã¢', 'â') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã£', 'ã') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã¤', 'ä') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Á') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'À') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Â') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ã') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ä') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã©', 'é') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã¨', 'è') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ãª', 'ê') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã«', 'ë') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'É') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'È') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ê') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ë') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã­', 'í') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã¬', 'ì') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã®', 'î') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã¯', 'ï') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Í') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ì') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Î') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ï') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã³', 'ó') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã²', 'ò') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã´', 'ô') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ãµ', 'õ') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã¶', 'ö') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ó') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ò') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ô') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Õ') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ö') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ãº', 'ú') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã¹', 'ù') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã»', 'û') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã¼', 'ü') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ú') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ù') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Û') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ü') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã§', 'ç') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ç') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã±', 'ñ') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Ã', 'Ñ') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Âº', 'º') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Âª', 'ª') WHERE content_key = 'main';
+UPDATE site_content SET content_json = replace(content_json, 'Â°', '°') WHERE content_key = 'main';
+
+UPDATE site_content SET updated_by = 'migration-fix-encoding-ptbr', updated_at = CURRENT_TIMESTAMP WHERE content_key = 'main';

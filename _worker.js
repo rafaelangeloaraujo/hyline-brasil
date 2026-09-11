@@ -72,7 +72,7 @@ const defaultContent = {
         "keywords": "contato Hy-Line, suporte técnico Hy-Line, atendimento avicultura"
       },
       "radar": {
-        "title": "Mercado | Indicadores de ovos | Hy-Line do Brasil",
+        "title": "Radar do Mercado | Indicadores de ovos | Hy-Line do Brasil",
         "description": "Acompanhe indicadores CEPEA do mercado de ovos comerciais em uma página objetiva da Hy-Line do Brasil.",
         "canonical": "/radar-mercado.php",
         "keywords": "radar do mercado ovos, CEPEA ovos, preço ovos comerciais, Hy-Line do Brasil"
@@ -182,7 +182,7 @@ const defaultContent = {
       "strength": "Adaptação, persistência e qualidade de ovos",
       "guides": [
         {
-          "file": "http://fluig.hyline.com.br:8080/volume/stream/Rmx1aWc=/P3Q9MSZ2b2w9RGVmYXVsdCZpZD05NjIyODImdmVyPTEwMDAmZmlsZT04MFIrU1REK1BPUl8yNjA1MjBfMDkxMzQ2LnBkZiZjcmM9MTQ5NTYyNDM5MCZzaXplPTIuMzg0OTk3JnVJZD0yMCZmU0lkPTEmdVNJZD0xJmQ9ZmFsc2UmdGtuPSZwdWJsaWNVcmw9dHJ1ZSZhdHRhY2g9ZmFsc2U=.pdf",
+          "file": "assets/technical/guia-manejo-hy-line-w80.pdf",
           "label": "Guia de Manejo Hy-Line W-80"
         }
       ]

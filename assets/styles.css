@@ -549,12 +549,19 @@ body{padding-top:0!important}
   .main-nav a{padding:10px 8px;font-size:12px}
   .nav-technical{flex:0 0 auto;max-width:none;padding-right:12px!important;padding-left:12px!important;white-space:nowrap}
 }
-@media(min-width:1181px) and (max-width:1320px){
+@media(min-width:1181px) and (max-width:1450px){
+  .site-header{gap:14px;padding-right:16px;padding-left:clamp(28px,4vw,56px)}
   .site-header .brand{min-width:154px}
   .brand-logo{width:150px}
-  .main-nav a{padding-right:6px;padding-left:6px;font-size:11px}
+  .main-nav{gap:2px}
+  .main-nav a{padding-right:4px;padding-left:4px;font-size:12.5px}
   .nav-radar{gap:5px}
-  .nav-technical{font-size:11px!important}
+  .nav-technical{padding-right:9px!important;padding-left:9px!important;font-size:12.5px!important}
+}
+@media(min-width:1451px){
+  .main-nav{gap:6px}
+  .main-nav a{font-size:13px}
+  .nav-technical{font-size:13px!important}
 }
 
 /* V40: painel de representantes mais legível. */
@@ -627,6 +634,21 @@ body{padding-top:0!important}
 .intranet-access-actions{display:flex;flex-wrap:wrap;gap:18px;align-items:center;margin-top:24px}
 @media(max-width:1050px){.story.section{grid-template-columns:1fr;justify-items:center}.story.section .story-copy,.story-video-wrap,.story-visual{max-width:720px}.proof-strip{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:620px){.proof-strip{grid-template-columns:1fr}.proof-strip article{justify-content:flex-start}.proof-strip article strong{min-width:70px}.intranet-access-card{padding:28px 22px}.intranet-access-actions .button{width:100%}}
+
+/* V46: página de transparência e relatórios salariais. */
+.transparency-page-hero{background:linear-gradient(120deg,#002d51 0 56%,#075b91 56%)}
+.transparency-band{background:#eef4f6}
+.transparency-list{display:grid;gap:32px;max-width:1240px;margin:0 auto}
+.transparency-report{overflow:hidden;background:#fff;border:1px solid var(--line);border-top:7px solid var(--yellow);border-radius:8px;box-shadow:0 18px 44px rgba(13,41,64,.1)}
+.transparency-report-heading{display:flex;justify-content:space-between;gap:28px;align-items:flex-end;padding:28px 30px 24px}
+.transparency-report-heading span{color:#9b7600;font-size:11px;font-weight:800;text-transform:uppercase}
+.transparency-report-heading h3{margin:6px 0;color:var(--blue);font-size:clamp(26px,3vw,38px);line-height:1.1}
+.transparency-report-heading p{margin:0;color:#4f6674;font-size:14px;line-height:1.6}
+.transparency-report-heading .text-link{flex:0 0 auto}
+.transparency-image-link{display:block;padding:0 30px;background:#fff}
+.transparency-image-link img{display:block;width:100%;height:auto;border:1px solid #d7e2e8}
+.transparency-report-actions{display:flex;justify-content:flex-end;padding:24px 30px 30px}
+@media(max-width:760px){.transparency-page-hero{background:linear-gradient(135deg,#002d51,#075b91)}.transparency-band{padding-right:18px;padding-left:18px}.transparency-report-heading{flex-direction:column;align-items:flex-start;padding:24px 20px 20px}.transparency-image-link{padding:0 12px}.transparency-report-actions{justify-content:stretch;padding:20px}.transparency-report-actions .button{width:100%;justify-content:center}}
 
 /* V46: faixa de pesquisa mais institucional e viva. */
 .research-band{grid-template-columns:minmax(320px,500px) minmax(160px,260px) minmax(420px,1fr);gap:clamp(28px,5vw,70px);align-items:center;padding:94px max(28px,6vw);background:radial-gradient(circle at 82% 18%,rgba(255,213,0,.16),transparent 30%),linear-gradient(115deg,#002d51 0 48%,#004f83 48% 100%);border-top:0;border-bottom:10px solid var(--yellow)}

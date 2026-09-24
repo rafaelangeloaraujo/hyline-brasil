@@ -1707,11 +1707,11 @@ function renderTransparency() {
       <div class="transparency-list">
         ${reports.map((report) => `<article class="transparency-report reveal">
           <div class="transparency-report-heading">
-            <div><span>2º semestre de 2026</span><h3>${e(report.title)}</h3><p>${e(report.company)}</p></div>
+            <div><span>2º semestre de 2026</span><p>${e(report.company)}</p></div>
             <a class="text-link" href="${e(report.file)}" target="_blank" rel="noopener">Abrir imagem em tamanho completo</a>
           </div>
-          <a class="transparency-image-link" href="${e(report.file)}" target="_blank" rel="noopener" aria-label="Abrir ${e(report.title)} em tamanho completo">
-            <img src="${e(report.file)}" alt="Relatório de Transparência e Igualdade Salarial de Mulheres e Homens, ${e(report.title)}, segundo semestre de 2026" loading="lazy">
+          <a class="transparency-image-link" href="${e(report.file)}" target="_blank" rel="noopener" aria-label="Abrir relatório de ${e(report.company)} em tamanho completo">
+            <img src="${e(report.file)}" alt="Relatório de Transparência e Igualdade Salarial de Mulheres e Homens, ${e(report.company)}, segundo semestre de 2026" loading="lazy">
           </a>
           <div class="transparency-report-actions"><a class="button primary" href="${e(report.file)}" download>Baixar relatório</a></div>
         </article>`).join("")}

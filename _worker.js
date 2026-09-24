@@ -88,6 +88,12 @@ const defaultContent = {
         "description": "Atalhos oficiais da Intranet Hy-Line do Brasil para sistemas internos, aplicativos, agenda e ferramentas de apoio operacional.",
         "canonical": "/intranet.php",
         "keywords": "intranet Hy-Line do Brasil, sistemas internos Hy-Line, aplicativos Hy-Line, Fluig Hy-Line, Farm App Hy-Line"
+      },
+      "transparencia": {
+        "title": "Transparência e igualdade salarial | Hy-Line do Brasil",
+        "description": "Conheça as iniciativas de transparência da Hy-Line do Brasil e consulte os Relatórios de Transparência e Igualdade Salarial das empresas de seu grupo econômico.",
+        "canonical": "/transparencia.php",
+        "keywords": "transparência salarial Hy-Line, igualdade salarial, relatório de transparência salarial"
       }
     }
   },
@@ -1113,6 +1119,7 @@ const pageMap = new Map([
   ["/pesquisa-desenvolvimento.php", "pesquisa"],
   ["/sobre-nos.php", "sobre"],
   ["/artigos.php", "artigos"],
+  ["/transparencia.php", "transparencia"],
   ["/intranet.php", "intranet"],
   ["/recursos-tecnicos.php", "recursos"],
   ["/radar-mercado.php", "radar"],
@@ -1203,6 +1210,7 @@ function renderPage(page, data, request) {
     pesquisa: renderResearch,
     sobre: renderAbout,
     artigos: renderArticles,
+    transparencia: renderTransparency,
     intranet: renderIntranet,
     recursos: renderTechnical,
     radar: renderRadar,
@@ -1220,7 +1228,7 @@ function renderPage(page, data, request) {
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/styles.css?v=37">
+  <link rel="stylesheet" href="/assets/styles.css?v=43">
 </head>
 <body data-lang="${lang}">
   ${customCode(localizedData, "bodyStart")}
@@ -1339,6 +1347,7 @@ const translationsEn = {
   "Bem-estar animal": "Animal welfare",
   "Representantes": "Representatives",
   "Artigos": "Articles",
+  "Transparência": "Transparency",
   "Contato": "Contact",
   "Mercado": "Market",
   "Intranet": "Intranet",
@@ -1397,6 +1406,12 @@ const translationsEn = {
   "Enviar informações": "Send information",
   "Ver representantes": "View representatives",
   "Painel": "Admin panel",
+  "Transparência e igualdade salarial.": "Pay transparency and equality.",
+  "A transparência fortalece relações de confiança, amplia o acesso à informação e contribui para uma atuação empresarial mais responsável. Como parte desse compromisso, a Hy-Line do Brasil disponibiliza os Relatórios de Transparência e Igualdade Salarial das empresas de seu grupo econômico. Os documentos podem ser consultados integralmente abaixo e baixados para referência.": "Transparency strengthens relationships of trust, expands access to information and contributes to more responsible business practices. As part of this commitment, Hy-Line Brazil provides the Pay Transparency and Equality Reports of the companies in its economic group. The documents can be viewed in full below and downloaded for reference.",
+  "Relatórios disponíveis": "Available reports",
+  "Consulte os documentos do 2º semestre de 2026.": "View the reports for the second half of 2026.",
+  "Abrir imagem em tamanho completo": "Open full-size image",
+  "Baixar relatório": "Download report",
 };
 
 const translationsEs = {
@@ -1425,6 +1440,7 @@ const translationsEs = {
   "Bem-estar animal": "Bienestar animal",
   "Representantes": "Representantes",
   "Artigos": "Artículos",
+  "Transparência": "Transparencia",
   "Contato": "Contacto",
   "Mercado": "Mercado",
   "Recursos técnicos": "Recursos técnicos",
@@ -1482,11 +1498,17 @@ const translationsEs = {
   "Enviar informações": "Enviar información",
   "Ver representantes": "Ver representantes",
   "Painel": "Panel",
+  "Transparência e igualdade salarial.": "Transparencia e igualdad salarial.",
+  "A transparência fortalece relações de confiança, amplia o acesso à informação e contribui para uma atuação empresarial mais responsável. Como parte desse compromisso, a Hy-Line do Brasil disponibiliza os Relatórios de Transparência e Igualdade Salarial das empresas de seu grupo econômico. Os documentos podem ser consultados integralmente abaixo e baixados para referência.": "La transparencia fortalece las relaciones de confianza, amplía el acceso a la información y contribuye a una actuación empresarial más responsable. Como parte de este compromiso, Hy-Line Brasil pone a disposición los Informes de Transparencia e Igualdad Salarial de las empresas de su grupo económico. Los documentos pueden consultarse íntegramente a continuación y descargarse como referencia.",
+  "Relatórios disponíveis": "Informes disponibles",
+  "Consulte os documentos do 2º semestre de 2026.": "Consulte los documentos del segundo semestre de 2026.",
+  "Abrir imagem em tamanho completo": "Abrir imagen en tamaño completo",
+  "Baixar relatório": "Descargar informe",
 };
 
 function metaTags(data, page, request) {
   const seo = data.seo || {};
-  const seoPage = seo.pages?.[page] || seo.pages?.home || {};
+  const seoPage = seo.pages?.[page] || defaultContent.seo.pages?.[page] || seo.pages?.home || {};
   const title = seoPage.title || `${data.site?.name || "Hy-Line do Brasil"}`;
   const description = seoPage.description || data.site?.tagline || "";
   const url = new URL(request.url);
@@ -1523,7 +1545,7 @@ function header(data, request, lang = "pt") {
     <a class="brand" href="/" aria-label="Hy-Line do Brasil"><img class="brand-logo" src="/${e(data.images?.logo || "assets/hyline-logo-brasil-new.png")}" alt="Hy-Line do Brasil"></a>
     <button class="menu-toggle" type="button" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
     <nav class="main-nav" aria-label="Menu principal">
-      <a href="/">Início</a><a href="/produtos.php">Produtos</a><a href="/sobre-nos.php">Sobre nós</a><a href="/pesquisa-desenvolvimento.php">P&D</a><a href="/bem-estar-animal.php">Bem-estar animal</a><a href="/representantes.php">Representantes</a><a href="/artigos.php">Artigos</a><a href="/contato.php">Contato</a><a class="nav-radar" href="/radar-mercado.php"><span class="radar-dot" aria-hidden="true"></span>Mercado</a><a href="/intranet.php">Intranet</a><a class="nav-technical" href="/recursos-tecnicos.php">Recursos técnicos</a>
+      <a href="/">Início</a><a href="/produtos.php">Produtos</a><a href="/sobre-nos.php">Sobre nós</a><a href="/pesquisa-desenvolvimento.php">P&D</a><a href="/bem-estar-animal.php">Bem-estar animal</a><a href="/representantes.php">Representantes</a><a href="/artigos.php">Artigos</a><a href="/contato.php">Contato</a><a class="nav-radar" href="/radar-mercado.php"><span class="radar-dot" aria-hidden="true"></span>Mercado</a><a href="/transparencia.php">Transparência</a><a href="/intranet.php">Intranet</a><a class="nav-technical" href="/recursos-tecnicos.php">Recursos técnicos</a>
     </nav>
   </header>`;
 }
@@ -1544,7 +1566,7 @@ function languageSwitch(request, lang = "pt") {
 }
 
 function footer(data) {
-  return `<footer class="footer"><a class="brand footer-brand" href="/"><img class="brand-logo" src="/assets/hyline-logo-brasil-footer.png" alt="Hy-Line do Brasil"></a><span>${e(data.site?.tagline || "")}</span><div><a href="/recursos-tecnicos.php">Recursos técnicos</a><a href="/contato.php">Contato</a><a href="/admin">Painel</a></div></footer>`;
+  return `<footer class="footer"><a class="brand footer-brand" href="/"><img class="brand-logo" src="/assets/hyline-logo-brasil-footer.png" alt="Hy-Line do Brasil"></a><span>${e(data.site?.tagline || "")}</span><div><a href="/transparencia.php">Transparência</a><a href="/recursos-tecnicos.php">Recursos técnicos</a><a href="/contato.php">Contato</a><a href="/admin">Painel</a></div></footer>`;
 }
 
 function renderHome(data) {
@@ -1653,6 +1675,47 @@ function renderArticles(data) {
         <h2>Artigos para consulta.</h2>
       </div>
       <div class="articles-grid">${articles.map(articleCard).join("")}</div>
+    </section>
+  </main>`;
+}
+
+function renderTransparency() {
+  const reports = [
+    {
+      title: "Incubatório NM",
+      company: "ILD Brasil Production Ltda. · CNPJ 02.924.519/0021-35",
+      file: "/assets/transparencia/relatorio-transparencia-nm-2026-2.png",
+    },
+    {
+      title: "Incubatório NG",
+      company: "ILD Brasil Production Ltda. · CNPJ 02.924.519/0007-87",
+      file: "/assets/transparencia/relatorio-transparencia-ng-2026-2.png",
+    },
+  ];
+
+  return `<main class="content-page transparency-page">
+    <section class="page-hero transparency-page-hero">
+      <p class="eyebrow light">Transparência</p>
+      <h1>Transparência e igualdade salarial.</h1>
+      <p>A transparência fortalece relações de confiança, amplia o acesso à informação e contribui para uma atuação empresarial mais responsável. Como parte desse compromisso, a Hy-Line do Brasil disponibiliza os Relatórios de Transparência e Igualdade Salarial das empresas de seu grupo econômico. Os documentos podem ser consultados integralmente abaixo e baixados para referência.</p>
+    </section>
+    <section class="content-band transparency-band">
+      <div class="content-heading">
+        <p class="eyebrow">Relatórios disponíveis</p>
+        <h2>Consulte os documentos do 2º semestre de 2026.</h2>
+      </div>
+      <div class="transparency-list">
+        ${reports.map((report) => `<article class="transparency-report reveal">
+          <div class="transparency-report-heading">
+            <div><span>2º semestre de 2026</span><h3>${e(report.title)}</h3><p>${e(report.company)}</p></div>
+            <a class="text-link" href="${e(report.file)}" target="_blank" rel="noopener">Abrir imagem em tamanho completo</a>
+          </div>
+          <a class="transparency-image-link" href="${e(report.file)}" target="_blank" rel="noopener" aria-label="Abrir ${e(report.title)} em tamanho completo">
+            <img src="${e(report.file)}" alt="Relatório de Transparência e Igualdade Salarial de Mulheres e Homens, ${e(report.title)}, segundo semestre de 2026" loading="lazy">
+          </a>
+          <div class="transparency-report-actions"><a class="button primary" href="${e(report.file)}" download>Baixar relatório</a></div>
+        </article>`).join("")}
+      </div>
     </section>
   </main>`;
 }
@@ -1870,7 +1933,7 @@ function contactResult(ok, message) {
 
 async function renderSitemap(request, env) {
   const origin = new URL(request.url).origin;
-  const paths = ["/", "/produtos.php", "/representantes.php", "/bem-estar-animal.php", "/pesquisa-desenvolvimento.php", "/sobre-nos.php", "/artigos.php", "/radar-mercado.php", "/intranet.php", "/recursos-tecnicos.php", "/contato.php"];
+  const paths = ["/", "/produtos.php", "/representantes.php", "/bem-estar-animal.php", "/pesquisa-desenvolvimento.php", "/sobre-nos.php", "/artigos.php", "/radar-mercado.php", "/transparencia.php", "/intranet.php", "/recursos-tecnicos.php", "/contato.php"];
   return `<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${paths.map(p => `<url><loc>${origin}${p}</loc></url>`).join("")}</urlset>`;
 }
 

@@ -1128,6 +1128,12 @@ const pageMap = new Map([
 
 export default {
   async fetch(request, env) {
+    const response = await routeRequest(request, env);
+    return sanitizeApplicationHeaders(response, request);
+  },
+};
+
+async function routeRequest(request, env) {
     const url = new URL(request.url);
 
     if (url.pathname.startsWith("/assets/")) {
@@ -1146,8 +1152,35 @@ export default {
 
     const data = await getContent(env);
     return html(renderPage(page, data, request));
-  },
-};
+}
+
+function sanitizeApplicationHeaders(response, request) {
+  const headers = new Headers(response.headers);
+  const identifyingHeaders = [
+    "Server",
+    "X-Powered-By",
+    "X-AspNet-Version",
+    "X-AspNetMvc-Version",
+    "X-Runtime",
+    "X-Generator",
+    "X-Backend-Server",
+    "Via",
+    "Date",
+  ];
+
+  identifyingHeaders.forEach((name) => headers.delete(name));
+
+  const pathname = new URL(request.url).pathname;
+  if (pathname.startsWith("/admin") || pathname.startsWith("/api/")) {
+    headers.set("Cache-Control", "no-store, private");
+  }
+
+  return new Response(response.body, {
+    status: response.status,
+    statusText: response.statusText,
+    headers,
+  });
+}
 
 async function serveAsset(request, env) {
   if (!env.ASSETS) return new Response("Asset não configurado", { status: 404 });
